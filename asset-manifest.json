@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Portfolio_Yarovenko_D_V_TS/static/css/main.5f361e03.chunk.css",
+    "main.js": "/Portfolio_Yarovenko_D_V_TS/static/js/main.b7c02aaf.chunk.js",
+    "main.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/main.b7c02aaf.chunk.js.map",
+    "runtime-main.js": "/Portfolio_Yarovenko_D_V_TS/static/js/runtime-main.3fcf77e6.js",
+    "runtime-main.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/runtime-main.3fcf77e6.js.map",
+    "static/js/2.a430f49c.chunk.js": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js",
+    "static/js/2.a430f49c.chunk.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js.map",
+    "index.html": "/Portfolio_Yarovenko_D_V_TS/index.html",
+    "precache-manifest.4f17efa52b0b37147a80b4bb686592dc.js": "/Portfolio_Yarovenko_D_V_TS/precache-manifest.4f17efa52b0b37147a80b4bb686592dc.js",
+    "service-worker.js": "/Portfolio_Yarovenko_D_V_TS/service-worker.js",
+    "static/css/main.5f361e03.chunk.css.map": "/Portfolio_Yarovenko_D_V_TS/static/css/main.5f361e03.chunk.css.map",
+    "static/js/2.a430f49c.chunk.js.LICENSE.txt": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js.LICENSE.txt",
+    "static/media/logo.svg": "/Portfolio_Yarovenko_D_V_TS/static/media/logo.5d5d9eef.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3fcf77e6.js",
+    "static/js/2.a430f49c.chunk.js",
+    "static/css/main.5f361e03.chunk.css",
+    "static/js/main.b7c02aaf.chunk.js"
+  ]
+}
