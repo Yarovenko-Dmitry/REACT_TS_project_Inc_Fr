@@ -1,23 +1,22 @@
 {
   "files": {
-    "main.css": "/Portfolio_Yarovenko_D_V_TS/static/css/main.5f361e03.chunk.css",
-    "main.js": "/Portfolio_Yarovenko_D_V_TS/static/js/main.b7c02aaf.chunk.js",
-    "main.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/main.b7c02aaf.chunk.js.map",
-    "runtime-main.js": "/Portfolio_Yarovenko_D_V_TS/static/js/runtime-main.3fcf77e6.js",
-    "runtime-main.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/runtime-main.3fcf77e6.js.map",
-    "static/js/2.a430f49c.chunk.js": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js",
-    "static/js/2.a430f49c.chunk.js.map": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js.map",
-    "index.html": "/Portfolio_Yarovenko_D_V_TS/index.html",
-    "precache-manifest.4f17efa52b0b37147a80b4bb686592dc.js": "/Portfolio_Yarovenko_D_V_TS/precache-manifest.4f17efa52b0b37147a80b4bb686592dc.js",
-    "service-worker.js": "/Portfolio_Yarovenko_D_V_TS/service-worker.js",
-    "static/css/main.5f361e03.chunk.css.map": "/Portfolio_Yarovenko_D_V_TS/static/css/main.5f361e03.chunk.css.map",
-    "static/js/2.a430f49c.chunk.js.LICENSE.txt": "/Portfolio_Yarovenko_D_V_TS/static/js/2.a430f49c.chunk.js.LICENSE.txt",
-    "static/media/logo.svg": "/Portfolio_Yarovenko_D_V_TS/static/media/logo.5d5d9eef.svg"
+    "main.css": "/REACT_TS_project_Inc_Fr/static/css/main.f6cffc85.chunk.css",
+    "main.js": "/REACT_TS_project_Inc_Fr/static/js/main.6ea98152.chunk.js",
+    "main.js.map": "/REACT_TS_project_Inc_Fr/static/js/main.6ea98152.chunk.js.map",
+    "runtime-main.js": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.3de0446d.js",
+    "runtime-main.js.map": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.3de0446d.js.map",
+    "static/js/2.feddaf0e.chunk.js": "/REACT_TS_project_Inc_Fr/static/js/2.feddaf0e.chunk.js",
+    "static/js/2.feddaf0e.chunk.js.map": "/REACT_TS_project_Inc_Fr/static/js/2.feddaf0e.chunk.js.map",
+    "index.html": "/REACT_TS_project_Inc_Fr/index.html",
+    "precache-manifest.da02ca22638edd6214c9528d716aa5c9.js": "/REACT_TS_project_Inc_Fr/precache-manifest.da02ca22638edd6214c9528d716aa5c9.js",
+    "service-worker.js": "/REACT_TS_project_Inc_Fr/service-worker.js",
+    "static/css/main.f6cffc85.chunk.css.map": "/REACT_TS_project_Inc_Fr/static/css/main.f6cffc85.chunk.css.map",
+    "static/js/2.feddaf0e.chunk.js.LICENSE.txt": "/REACT_TS_project_Inc_Fr/static/js/2.feddaf0e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3fcf77e6.js",
-    "static/js/2.a430f49c.chunk.js",
-    "static/css/main.5f361e03.chunk.css",
-    "static/js/main.b7c02aaf.chunk.js"
+    "static/js/runtime-main.3de0446d.js",
+    "static/js/2.feddaf0e.chunk.js",
+    "static/css/main.f6cffc85.chunk.css",
+    "static/js/main.6ea98152.chunk.js"
   ]
 }
