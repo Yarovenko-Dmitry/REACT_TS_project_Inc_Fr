@@ -1,9 +1,10 @@
+
 import React from 'react';
 
-export const ProfileContainer = () => {
+export const RegisterContainer = () => {
   return (
     <div>
-      ProfileContainer
+      RegisterContainer
     </div>
   )
 }

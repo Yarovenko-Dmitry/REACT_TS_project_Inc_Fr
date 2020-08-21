@@ -1,9 +1,9 @@
 import React from 'react';
 
-export const ProfileContainer = () => {
+export const PasswordRecovery = () => {
   return (
     <div>
-      ProfileContainer
+      PasswordRecovery
     </div>
   )
 }
