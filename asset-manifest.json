@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/REACT_TS_project_Inc_Fr/static/css/main.aac678fd.chunk.css",
-    "main.js": "/REACT_TS_project_Inc_Fr/static/js/main.5888c55e.chunk.js",
-    "main.js.map": "/REACT_TS_project_Inc_Fr/static/js/main.5888c55e.chunk.js.map",
-    "runtime-main.js": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.3de0446d.js",
-    "runtime-main.js.map": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.3de0446d.js.map",
-    "static/js/2.d1295ea8.chunk.js": "/REACT_TS_project_Inc_Fr/static/js/2.d1295ea8.chunk.js",
-    "static/js/2.d1295ea8.chunk.js.map": "/REACT_TS_project_Inc_Fr/static/js/2.d1295ea8.chunk.js.map",
+    "main.css": "/REACT_TS_project_Inc_Fr/static/css/main.bbdc065a.chunk.css",
+    "main.js": "/REACT_TS_project_Inc_Fr/static/js/main.2e4228f2.chunk.js",
+    "main.js.map": "/REACT_TS_project_Inc_Fr/static/js/main.2e4228f2.chunk.js.map",
+    "runtime-main.js": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.90ce0e52.js",
+    "runtime-main.js.map": "/REACT_TS_project_Inc_Fr/static/js/runtime-main.90ce0e52.js.map",
+    "static/js/2.4160281d.chunk.js": "/REACT_TS_project_Inc_Fr/static/js/2.4160281d.chunk.js",
+    "static/js/2.4160281d.chunk.js.map": "/REACT_TS_project_Inc_Fr/static/js/2.4160281d.chunk.js.map",
     "index.html": "/REACT_TS_project_Inc_Fr/index.html",
-    "precache-manifest.39e4824745b5a84f31e6dbe45cb4e6cd.js": "/REACT_TS_project_Inc_Fr/precache-manifest.39e4824745b5a84f31e6dbe45cb4e6cd.js",
+    "precache-manifest.d56973e9d611a917783c940a8b768afd.js": "/REACT_TS_project_Inc_Fr/precache-manifest.d56973e9d611a917783c940a8b768afd.js",
     "service-worker.js": "/REACT_TS_project_Inc_Fr/service-worker.js",
-    "static/css/main.aac678fd.chunk.css.map": "/REACT_TS_project_Inc_Fr/static/css/main.aac678fd.chunk.css.map",
-    "static/js/2.d1295ea8.chunk.js.LICENSE.txt": "/REACT_TS_project_Inc_Fr/static/js/2.d1295ea8.chunk.js.LICENSE.txt"
+    "static/css/main.bbdc065a.chunk.css.map": "/REACT_TS_project_Inc_Fr/static/css/main.bbdc065a.chunk.css.map",
+    "static/js/2.4160281d.chunk.js.LICENSE.txt": "/REACT_TS_project_Inc_Fr/static/js/2.4160281d.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.3de0446d.js",
-    "static/js/2.d1295ea8.chunk.js",
-    "static/css/main.aac678fd.chunk.css",
-    "static/js/main.5888c55e.chunk.js"
+    "static/js/runtime-main.90ce0e52.js",
+    "static/js/2.4160281d.chunk.js",
+    "static/css/main.bbdc065a.chunk.css",
+    "static/js/main.2e4228f2.chunk.js"
   ]
 }
