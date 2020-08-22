@@ -1,63 +1,55 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    withCredentials: true,
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
-    headers: {
-        'API-KEY': '7670157b-55fb-46c4-91b5-ea5772613da8'
-    }
+	withCredentials: true,
+	baseURL: 'https://neko-back.herokuapp.com/2.0',
 });
 
+export const passwordRecovery = {
+	getToken(email: string) {
+		let promise = instance.post(`/auth/forgot/`, {
+			email,
+			from: 'password-reset-server <noreply@noreply.it>',
+			message: `
+<div style="background-color: lime; padding: 15px">
+password recovery link: 
+<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+</div>
+`
+		});
+		return promise;
+	}
+};
 
-export const usersAPI = {
-    getUsers(currentPage: number = 1, pageSize: number = 10) {
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`
-        )
-            .then(response => response.data);
-    },
-
-    follow(userId: string) {
-        return instance.post(`follow/${userId}`)
-
-    },
-    unFollow(userId: string) {
-        return instance.delete(`follow/${userId}`)
-    },
-    getProfile(userId: string) {
-        console.warn('Obsolute method. Please use profileAPI object')
-        return profileAPI.getProfile(userId);
-    }
-}
 
 export const profileAPI = {
-    getProfile(userId: string) {
-        return instance.get(`profile/` + userId);
-    },
-    getStatus(userId: string) {
-        return instance.get(`profile/status/` + userId);
-    },
-    updateStatus(status: string) {
-        return instance.put(`profile/status`, {status: status});
-    }
-}
+	getProfile(userId: string) {
+		return instance.get(`profile/` + userId);
+	},
+	getStatus(userId: string) {
+		return instance.get(`profile/status/` + userId);
+	},
+	updateStatus(status: string) {
+		return instance.put(`profile/status`, {status: status});
+	}
+};
 
 export const authAPI = {
-    me() {
-        return instance.get(`auth/me`)
-    },
-    login(email: string, password: string, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
-    },
-    logout() {
-        return instance.delete(`auth/login`);
-    },
-    register(data: RegisterDataType) {
-        debugger
-        return instance.post(`auth/register`, data);
-    }
-}
+	me() {
+		return instance.get(`auth/me`);
+	},
+	login(email: string, password: string, rememberMe = false) {
+		return instance.post(`auth/login`, {email, password, rememberMe});
+	},
+	logout() {
+		return instance.delete(`auth/login`);
+	},
+	register(data: RegisterDataType) {
+		return instance.post(`auth/register`, data);
+	}
+};
 
 type RegisterDataType = {
-    email: string,
-    password: string
+	email: string,
+	password: string
 }

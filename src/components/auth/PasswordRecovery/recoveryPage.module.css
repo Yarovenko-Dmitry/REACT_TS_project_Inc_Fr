@@ -54,3 +54,22 @@
 .form .btn:hover{
     background: darkorange;
 }
+
+.error {
+    color: red;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.success {
+    color: limegreen;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px 0;
+}
+
+.btn:disabled {
+    background-color: darkgray!important;
+    cursor: progress;
+}
