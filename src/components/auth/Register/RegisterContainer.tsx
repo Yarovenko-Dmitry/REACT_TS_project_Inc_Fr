@@ -18,7 +18,6 @@ export const RegisterContainer = () => {
             password: ''
         },
         onSubmit: values => {
-            debugger
             dispatch(RegisterTC(values))
         }
     })
