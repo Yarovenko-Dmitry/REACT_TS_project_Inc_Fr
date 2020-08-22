@@ -1,14 +1,26 @@
-.nav {
-  grid-area: n;
-  padding: 20px;
-  background-color: #eee8aa;
+nav {
+  display: flex;
+  justify-content: center;
 }
 
-.item a {
-  color: #ff0080;
-  text-decoration: none;
+.btn{
+  color:#000;
+  background:rgba(232, 126, 4, 0.8);
+  padding:10px 20px;
+  font-size:12px;
+  text-decoration:none;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  -webkit-transition-property: all;
+  -webkit-transition-duration: .2s;
+  -moz-transition-timing-function: cubic-bezier(100,50,21,6);
+  -moz-transition-property: all;
+  -moz-transition-timing-function: cubic-bezier(100,50,21,6);
 }
 
-.item .activLink {
-  color: #1ddf30;
+.btn:hover{
+  border:none;
+  background:rgba(0, 0, 0, 0.4);
+  background:#fff;
+  color: rgba(232, 126, 4, 0.8);
 }

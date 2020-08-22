@@ -10,26 +10,23 @@ import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecov
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
 
 function App() {
-  return (
-    <div className="App">
-      hello world
-      <Navbar/>
-      <ButtonSelect/>
-      <ButtonCancel/>
-
-      <Route path={'/profile/:userId?'}
-             render={() => <ProfileContainer/>}/>
-      <Route path={'/login'}
-             render={() => <LoginPage/>}/>
-      <Route path={'/register'}
-             render={() => <RegisterContainer/>}/>
-      <Route path={'/passwordRecovery'}
-             render={() => <PasswordRecovery/>}/>
-      <Route path={'/passwordCreation'}
-             render={() => <PasswordCreation/>}/>
-
-    </div>
-  );
+	return (
+		<div className="App">
+			<header>
+				<Navbar/>
+			</header>
+			<Route path={'/profile/:userId?'}
+			       render={() => <ProfileContainer/>}/>
+			<Route path={'/login'}
+			       render={() => <LoginPage/>}/>
+			<Route path={'/register'}
+			       render={() => <RegisterContainer/>}/>
+			<Route path={'/passwordRecovery'}
+			       render={() => <PasswordRecovery/>}/>
+			<Route path={'/passwordCreation'}
+			       render={() => <PasswordCreation/>}/>
+		</div>
+	);
 }
 
 export default App;
