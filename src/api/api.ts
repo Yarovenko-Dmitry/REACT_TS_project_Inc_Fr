@@ -2,10 +2,10 @@ import axios from 'axios';
 
 const instance = axios.create({
     withCredentials: true,
-    baseURL: 'https://neko-back.herokuapp.com/2.0/',
-    headers: {
-        'API-KEY': '7670157b-55fb-46c4-91b5-ea5772613da8'
-    }
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
+    // headers: {
+    //     'API-KEY': '7670157b-55fb-46c4-91b5-ea5772613da8'
+    // }
 });
 
 
@@ -53,7 +53,7 @@ export const authAPI = {
     },
     register(data: RegisterDataType) {
         debugger
-        return instance.post(`auth/register`, data);
+        return instance.post(`/auth/register`, {...data});
     }
 }
 
