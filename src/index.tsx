@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './a1-main/m1-ui/App';
 import * as serviceWorker from './serviceWorker';
 import {Provider} from 'react-redux';
-import store from "./a1-main/m2-bll/redux/redux-store";
 import {HashRouter} from 'react-router-dom';
+import App from './App';
+import store from './redux/redux-store';
 
 ReactDOM.render(
   <React.StrictMode>
