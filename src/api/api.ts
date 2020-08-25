@@ -11,16 +11,18 @@ export const passwordRecovery = {
 			email,
 			from: 'password-reset-server <noreply@noreply.it>',
 			message: `
-<div style="background-color: lime; padding: 15px">
-password recovery link: 
-<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
-</div>
-`
+					<div style="background-color: lime; padding: 15px">
+					password recovery link: 
+					<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+					</div>
+					`
 		});
 		return promise;
+	},
+	newPassword(password:string, resetPasswordToken:string) {
+		return instance.post(`/auth/set-new-password`,{password, resetPasswordToken})
 	}
 };
-
 
 export const profileAPI = {
 	getProfile(userId: string) {

@@ -9,9 +9,9 @@ export const PasswordRecovery = () => {
 
 	const dispatch = useDispatch();
 
-	const error = useSelector<AppRootStateType, string>(state => state.recovery.error);
-	const success = useSelector<AppRootStateType, boolean>(state => state.recovery.success);
-	const loading = useSelector<AppRootStateType, boolean>(state => state.recovery.loading);
+	const error = useSelector<AppRootStateType, string>(state => state.pwRecoveryRequest.error);
+	const success = useSelector<AppRootStateType, boolean>(state => state.pwRecoveryRequest.success);
+	const loading = useSelector<AppRootStateType, boolean>(state => state.pwRecoveryRequest.loading);
 
 	const formik = useFormik({
 		initialValues: {
