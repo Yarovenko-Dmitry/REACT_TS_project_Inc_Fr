@@ -1,10 +1,15 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
 import thunkMiddleware from 'redux-thunk';
 import {registerReducer} from "./register-reducer";
+import passwordRecoveryReducer from './passwordRecovery-reducer';
+import pssawordCreationReducer from './pssawordCreation-reducer';
 
 
 const reducers = combineReducers({
-    register: registerReducer
+    register: registerReducer,
+    pwRecoveryRequest: passwordRecoveryReducer,
+    passwordUpdate: pssawordCreationReducer
+
 });
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
