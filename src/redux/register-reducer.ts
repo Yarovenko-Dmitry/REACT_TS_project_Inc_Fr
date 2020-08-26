@@ -21,13 +21,15 @@ const setRegisterAC = (value: boolean) => ({
 });
 
 export const RegisterTC = (data: RegisterParamsType) => async (dispatch: Dispatch<ActionsType>) => {
-	debugger
-	let response = await authAPI.register(data);
+    try {
+        let response = await authAPI.register(data)
+            dispatch(setRegisterAC(true))
+    } catch (e) {
+        console.log(e)
+    }
+}
 
-	if (response.data.resultCode === 0) {
-		dispatch(setRegisterAC(true));
-	}
-};
+
 //types
 type RegisterReducerType = {
 	isRegistered: boolean
