@@ -81,7 +81,6 @@ export const setLoginTC = (email: string, password: string, rememberMe: boolean 
       const {response} = error;
       const {request, ...errorObject} = response;
       // dispatch(setSuccessAC(false));
-
       dispatch(setLoadingAC(false));
       return dispatch(setErrorAC(errorObject.data.error));
     });
