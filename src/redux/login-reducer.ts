@@ -1,25 +1,42 @@
 import {Dispatch} from 'redux';
-import {passwordRecovery} from '../api/api';
+import {authAPI} from '../api/api';
 
 
 export type LoginReducerType = {
-  error: string
-  success: boolean
-  loading: boolean
+  _id: string;
+  email: string;
+  name: string;
+  avatar?: string;
+  publicCardPacksCount: number;
+  created: string;
+  updated: string;
+  isAdmin: boolean;
+  verified: boolean;
+  rememberMe: boolean;
+  error: string;
 };
 
 let internalState: LoginReducerType = {
+  _id: '',
+  email: '',
+  name: '',
+  avatar: '',
+  publicCardPacksCount: 0,
+  created: '',
+  updated: '',
+  isAdmin: false,
+  verified: false,
+  rememberMe: false,
   error: '',
-  success: false,
-  loading: false
 };
 
 const loginReducer = (state: LoginReducerType = internalState, action: ActionTypes) => {
 
   switch (action.type) {
-    case 'login/SET_SUCCESS':
+    case 'login/SET_USER_DATA':
+      debugger
       return {
-        ...state, success: action.success
+        ...action.data
       };
     case 'login/SET_LOADING':
       return {
@@ -34,10 +51,11 @@ const loginReducer = (state: LoginReducerType = internalState, action: ActionTyp
   }
 }
 
-const setSuccessAC = (success: boolean) => ({
-  type: 'login/SET_SUCCESS',
-  success
+const setUserDataAC = (data: LoginReducerType) => ({
+  type: 'login/SET_USER_DATA',
+  data
 } as const);
+
 const setLoadingAC = (loading: boolean) => ({
   type: 'login/SET_LOADING',
   loading
@@ -49,11 +67,24 @@ export const setErrorAC = (error: string) => ({
 
 type ActionTypes =
   | ReturnType<typeof setErrorAC>
-  | ReturnType<typeof setSuccessAC>
+  | ReturnType<typeof setUserDataAC>
   | ReturnType<typeof setLoadingAC>
 
-export const setLoginTC = (password: string, token: string) => (dispatch: Dispatch<ActionTypes>) => {
+export const setLoginTC = (email: string, password: string, rememberMe: boolean = false) => (dispatch: Dispatch<ActionTypes>) => {
+  authAPI.login(email, password, rememberMe)
+    .then(res => {
 
+        dispatch(setUserDataAC(res.data))
+      }
+    )
+    .catch(error => {
+      const {response} = error;
+      const {request, ...errorObject} = response;
+      // dispatch(setSuccessAC(false));
+      dispatch(setLoadingAC(false));
+      return dispatch(setErrorAC(errorObject.data.error));
+    });
 };
+
 
 export default loginReducer
