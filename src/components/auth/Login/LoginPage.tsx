@@ -1,68 +1,62 @@
 import React from 'react';
-import {ErrorMessage, Field, Form, Formik} from 'formik';
+import {useFormik} from 'formik';
+import {useDispatch, useSelector} from 'react-redux';
+import {setLoginTC} from '../../../redux/login-reducer';
+import {AppRootStateType} from '../../../redux/redux-store';
 
 
 export const LoginPage = () => {
+  const getState = useSelector<AppRootStateType, string>(state => state.login.email)
   return (
     <div>
       LoginPage
+      {getState}
       <LoginForm/>
     </div>
   )
 }
 
-const loginFormValidate = (values: any) => {
-  const errors: any = {};
-  if (!values.email) {
-    errors.email = 'Required';
-  } else if (
-    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-  ) {
-    errors.email = 'Invalid email address';
-  }
-}
-
 const LoginForm = () => {
-
-  const submit = (values: any, {setSubmitting} : {setSubmitting: (isSubmitting: boolean) => void}) => {
-
-
-    // setTimeout(() => {
-    //   // alert(JSON.stringify(values, null, 2));
-    //   setSubmitting(false);
-    // }, 400);
-  }
-
+  const dispatch = useDispatch()
+  const formik: any = useFormik({
+    initialValues: {
+      email: '',
+      password: '',
+      rememberMe: false
+    },
+    onSubmit: values => {
+      const {email, password, rememberMe} = values
+      dispatch(setLoginTC(email, password, rememberMe))
+      console.log(JSON.stringify(values, null, 2));
+    },
+  });
   return (
-    <div>
-      <Formik
-        initialValues={{email: '', password: ''}}
-        validate={loginFormValidate}
-        onSubmit={submit}
-      >
-        {({isSubmitting}) => (
-          <Form>
-            <Field type="email"
-                   name="email"
-                   placeholder="email"
-            />
-            <ErrorMessage name="email"
-                          component="div"/>
-            <Field type="password"
-                   name="password"
-                   placeholder="password"/>
-            <ErrorMessage name="password"
-                          component="div"/>
-            <button type="submit"
-                    disabled={isSubmitting}>
-              Submit
-            </button>
-          </Form>
-        )}
-      </Formik>
-    </div>
-  )
-
-}
-
-
+    <form onSubmit={formik.handleSubmit}>
+      <label htmlFor="email">Email Address</label>
+      <input
+        id="email"
+        name="email"
+        type="email"
+        onChange={formik.handleChange}
+        value={formik.values.email}
+      />
+      <label htmlFor="password">password</label>
+      <input
+        id="password"
+        name="password"
+        type="password"
+        onChange={formik.handleChange}
+        value={formik.values.password}
+      />
+      <label htmlFor="rememberMe">rememberMe</label>
+      <input
+        id="rememberMe"
+        name="rememberMe"
+        type="checkbox"
+        onChange={formik.handleChange}
+        value={formik.values.rememberMe}
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
