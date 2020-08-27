@@ -23,7 +23,7 @@ function App() {
 			       render={() => <RegisterContainer/>}/>
 			<Route path={'/passwordRecovery'}
 			       render={() => <PasswordRecovery/>}/>
-			<Route path={'/passwordCreation'}
+			<Route path={'/set-new-password/:token?'}
 			       render={() => <PasswordCreation/>}/>
 		</div>
 	);
