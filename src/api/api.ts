@@ -52,7 +52,7 @@ export const authAPI = {
         return instance.delete(`auth/login`);
     },
     register(data: RegisterDataType) {
-        debugger
+
         return instance.post(`/auth/register`, {...data});
     }
 }

@@ -21,12 +21,14 @@ const setRegisterAC = (value: boolean) => ({
 })
 
 export const RegisterTC = (data: RegisterParamsType) => async (dispatch: Dispatch<ActionsType>) => {
-    debugger
+
     try {
         let response = await authAPI.register(data)
             dispatch(setRegisterAC(true))
     } catch (e) {
-        console.log(e)
+       const error = e.response
+        ? e.response.data.error : (e.message+ 'more details in the console')
+        console.log(error)
     }
 
 }

@@ -11,7 +11,16 @@ export const RegisterContainer = () => {
     const isRegistered = useSelector<AppRootStateType, boolean>(state => state.register.isRegistered)
     const formik = useFormik({
         validate: (values: any) => {
-
+            if (!values.email) {
+                return {
+                    email: 'Email is required'
+                }
+            }
+            if (!values.password) {
+                return {
+                    password: 'Password is required'
+                }
+            }
         },
         initialValues: {
             email: '',
@@ -42,12 +51,14 @@ export const RegisterContainer = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('email')}
                             />
+                            {formik.errors.email ? <div>{formik.errors.email}</div> : null}
                             <TextField
                                 type="password"
                                 label="Password"
                                 margin="normal"
                                 {...formik.getFieldProps('password')}
                             />
+                            {formik.errors.password ? <div>{formik.errors.email}</div> : null}
                             <Button type={'submit'} variant={'contained'} color={'primary'}>Register</Button>
                         </FormGroup>
                     </FormControl>
