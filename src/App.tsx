@@ -7,6 +7,7 @@ import {LoginPage} from './components/auth/Login/LoginPage';
 import {RegisterContainer} from './components/auth/Register/RegisterContainer';
 import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecovery';
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
+import {Profile} from "./components/Profile/Profile";
 
 function App() {
 
@@ -16,7 +17,7 @@ function App() {
 				<Navbar/>
 			</header>
 			<Route path={'/profile/:userId?'}
-			       render={() => <ProfileContainer/>}/>
+			       render={() => <Profile/>}/>
 			<Route path={'/login'}
 			       render={() => <LoginPage/>}/>
 			<Route path={'/register'}

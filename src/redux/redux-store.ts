@@ -4,13 +4,15 @@ import {registerReducer} from "./register-reducer";
 import passwordRecoveryReducer from './passwordRecovery-reducer';
 import pssawordCreationReducer from './pssawordCreation-reducer';
 import loginReducer from './login-reducer';
+import {appReducer} from "./app-reducer";
 
 
 const reducers = combineReducers({
   register: registerReducer,
   pwRecoveryRequest: passwordRecoveryReducer,
   passwordUpdate: pssawordCreationReducer,
-  login: loginReducer
+  login: loginReducer,
+  app: appReducer
 });
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));
