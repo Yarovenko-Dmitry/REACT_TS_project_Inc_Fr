@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
-import {ButtonCancel, ButtonSelect} from './components/common/Button/Button';
 import {Route} from 'react-router-dom';
 import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {LoginPage} from './components/auth/Login/LoginPage';
@@ -10,8 +9,9 @@ import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecov
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
 
 function App() {
+
 	return (
-		<div className="App">
+			<div className="App">
 			<header>
 				<Navbar/>
 			</header>

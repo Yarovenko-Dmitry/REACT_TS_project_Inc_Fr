@@ -1,26 +1,51 @@
 import React from 'react';
-import s from './Navbar.module.css';
-import {NavLink} from 'react-router-dom';
+import {makeStyles} from '@material-ui/core/styles';
+import {
+	AppBar,
+	Box,
+	createStyles,
+	Theme,
+	Toolbar,
+	Typography
+} from '@material-ui/core';
+import NavbarButton from '../../common/NavbarButton';
+
+const useStyles = makeStyles((theme: Theme) =>
+	createStyles({
+		marginAutoItem: {
+			margin: 'auto'
+		},
+		navbar: {
+			backgroundColor: '#2c3258'
+		},
+		btn: {
+			margin: theme.spacing(1),
+			color: '#e4b61a',
+			borderColor: '#e4b61a',
+			textDecoration:'none'
+		},
+	}),
+);
 
 const Navbar = () => {
+	const classes = useStyles();
+
 	return (
-		<nav>
-			<NavLink to={'/profile'} className={s.btn} activeClassName={s.active}>
-				profile
-			</NavLink>
-			<NavLink to={'/login'} className={s.btn} activeClassName={s.active}>
-				login
-			</NavLink>
-			<NavLink to={'/register'} className={s.btn} activeClassName={s.active}>
-				registration
-			</NavLink>
-			<NavLink to={'/passwordRecovery'} className={s.btn} activeClassName={s.active}>
-				recovery
-			</NavLink>
-			<NavLink to={'/set-new-password'} className={s.btn} activeClassName={s.active}>
-				create a new pw
-			</NavLink>
-		</nav>
+		<AppBar position="static" className={classes.navbar}>
+			<Toolbar>
+				<Typography variant="h6">
+					Cards
+				</Typography>
+				<Box className={classes.marginAutoItem}>
+					<NavbarButton link={'/profile'} name={'Profile'}/>
+					<NavbarButton link={'/login'} name={'login'}/>
+					<NavbarButton link={'/register'} name={'register'}/>
+					<NavbarButton link={'/passwordRecovery'} name={'Recovery'}/>
+					<NavbarButton link={'/set-new-password'} name={'New password'}/>
+				</Box>
+			</Toolbar>
+		</AppBar>
+
 	);
 };
 export default Navbar;
