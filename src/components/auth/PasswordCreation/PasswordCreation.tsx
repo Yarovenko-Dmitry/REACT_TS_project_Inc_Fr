@@ -20,9 +20,9 @@ const validationSchema = Yup.object().shape({
 
 export const PasswordCreation = () => {
 
-	const error = useSelector<AppRootStateType, any>(state => state.passwordUpdate.error);
-	const success = useSelector<AppRootStateType, any>(state => state.passwordUpdate.success);
-	const loading = useSelector<AppRootStateType, any>(state => state.passwordUpdate.loading);
+	const error = useSelector<AppRootStateType, string>(state => state.passwordUpdate.error);
+	const success = useSelector<AppRootStateType, boolean>(state => state.passwordUpdate.success);
+	const loading = useSelector<AppRootStateType, boolean>(state => state.passwordUpdate.loading);
 
 	const {token} = useParams();
 	const dispatch = useDispatch();
@@ -43,6 +43,8 @@ export const PasswordCreation = () => {
 		window.confirm('Your password has been changed!')
 		return <Redirect to={'/'}/>;
 	}
+
+	console.log()
 
 	return (
 		<section>
@@ -77,7 +79,7 @@ export const PasswordCreation = () => {
 								onChange={formik.handleChange}
 								value={formik.values.changepassword}
 							/>
-							<button disabled={loading || formik.errors.changepassword || formik.errors.password} className={style.btn}>Send</button>
+							<button disabled={loading || !!formik.errors.changepassword || !!formik.errors.password} className={style.btn}>Send</button>
 						</form>
 					</div>
 				</div>
