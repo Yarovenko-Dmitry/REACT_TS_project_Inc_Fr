@@ -1,6 +1,6 @@
 import { Dispatch } from "redux"
 import {authAPI} from "../api/api";
-import {authMeAC} from "./login-reducer";
+
 
 const initialState: InitialStateType = {
     isInitialized: false,
@@ -26,7 +26,6 @@ export const initializeAppAC = (isInitialized: boolean) => ({type: 'APP/INITIALI
 export const initializeAppTC = () => (dispatch: Dispatch) => {
     authAPI.me().then(res => {
         try {
-            dispatch(authMeAC(true, res))
             dispatch(initializeAppAC(true))
         } catch (e) {
             dispatch(initializeAppAC(true))
