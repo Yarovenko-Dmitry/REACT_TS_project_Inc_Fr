@@ -5,12 +5,21 @@ const instance = axios.create({
 	baseURL: 'https://neko-back.herokuapp.com/2.0',
 });
 
-
 export const mainContent = {
-	getPacksOfCards() {
-		return instance.get(`/cards/pack`)
+	getPacksOfCards(page:number,row:number) {
+		return instance.get(`/cards/pack?page=${page}&pageCount=${row}`);
+	},
+	getRangedCards(page:number, count:number, min:number, max:number) {
+		return instance.get(`/cards/pack?page=${page}&pageCount=${count}&min=${min}&max=${max}`);
+	},
+	addNewPack(name:string) {
+		return instance.post(`/cards/pack`, {
+			cardsPack: {
+				name: name
+			}
+		});
 	}
-}
+};
 
 export const passwordRecovery = {
 	getToken(email: string) {
@@ -26,8 +35,8 @@ export const passwordRecovery = {
 		});
 		return promise;
 	},
-	newPassword(password:string, resetPasswordToken:string) {
-		return instance.post(`/auth/set-new-password`,{password, resetPasswordToken})
+	newPassword(password: string, resetPasswordToken: string) {
+		return instance.post(`/auth/set-new-password`, {password, resetPasswordToken});
 	}
 };
 
@@ -44,20 +53,20 @@ export const profileAPI = {
 };
 
 export const authAPI = {
-    me() {
-        return instance.get(`auth/me`)
-    },
-    login(email: string, password: string, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
-    },
-    logout() {
-        return instance.delete(`auth/login`);
-    },
-    register(data: RegisterDataType) {
-        debugger
-        return instance.post(`/auth/register`, {...data});
-    }
-}
+	me() {
+		return instance.get(`auth/me`);
+	},
+	login(email: string, password: string, rememberMe = false) {
+		return instance.post(`auth/login`, {email, password, rememberMe});
+	},
+	logout() {
+		return instance.delete(`auth/login`);
+	},
+	register(data: RegisterDataType) {
+		debugger
+		return instance.post(`/auth/register`, {...data});
+	}
+};
 
 type RegisterDataType = {
 	email: string,
