@@ -42,6 +42,7 @@ const Navbar = () => {
 					<NavbarButton link={'/register'} name={'register'}/>
 					<NavbarButton link={'/passwordRecovery'} name={'Recovery'}/>
 					<NavbarButton link={'/set-new-password'} name={'New password'}/>
+					<NavbarButton link={'/packs'} name={'Packs of cards'}/>
 				</Box>
 			</Toolbar>
 		</AppBar>

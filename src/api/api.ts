@@ -5,6 +5,13 @@ const instance = axios.create({
 	baseURL: 'https://neko-back.herokuapp.com/2.0',
 });
 
+
+export const mainContent = {
+	getPacksOfCards() {
+		return instance.get(`/cards/pack`)
+	}
+}
+
 export const passwordRecovery = {
 	getToken(email: string) {
 		let promise = instance.post(`/auth/forgot/`, {

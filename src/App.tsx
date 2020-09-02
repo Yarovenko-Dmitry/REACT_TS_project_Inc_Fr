@@ -7,6 +7,7 @@ import {LoginPage} from './components/auth/Login/LoginPage';
 import {RegisterContainer} from './components/auth/Register/RegisterContainer';
 import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecovery';
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
+import Packs from './components/Main-content/Packs/Packs';
 
 function App() {
 
@@ -25,6 +26,8 @@ function App() {
 			       render={() => <PasswordRecovery/>}/>
 			<Route path={'/set-new-password/:token?'}
 			       render={() => <PasswordCreation/>}/>
+			       <Route path={'/packs'}
+			       render={() => <Packs/>}/>
 		</div>
 	);
 }
