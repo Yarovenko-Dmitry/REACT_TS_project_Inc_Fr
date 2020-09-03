@@ -23,13 +23,15 @@ const useStyles = makeStyles((theme) => ({
 
 
 type PropsType = {
-	error: boolean | string
-	formik: any
-	type: string
-	label : string
+	error?: boolean | string
+	formik?: any
+	type?: string
+	label?: string
+	value?: string
+	onChange?: any
 }
 
-const InputField = ({error = false,formik, type, label}: PropsType) => {
+const InputField = ({error = false, formik, type, label, value, onChange}: PropsType) => {
 
 	const classes = useStyles();
 
@@ -43,6 +45,10 @@ const InputField = ({error = false,formik, type, label}: PropsType) => {
 		                     variant="outlined"
 		                     type={type}
 		                     {...formik}
+		                     onChange={(event) => {
+			                     onChange( event.currentTarget.value)
+		                     }}
+		                     value={value}
 
 		/>
 	);

@@ -7,15 +7,14 @@ export type PssawordCreationReducerType = {
 	loading: boolean
 };
 
-let internalState: PssawordCreationReducerType = {
+let initialState: PssawordCreationReducerType = {
 	error: '',
 	success: false,
-	loading: false
+	loading: false,
 };
 
-const pssawordCreationReducer = (state: PssawordCreationReducerType = internalState,
+const pssawordCreationReducer = (state: PssawordCreationReducerType = initialState,
 	action: ActionTypes) => {
-
 	switch (action.type) {
 		case 'pwCreation/SET_SUCCESS':
 			return {
