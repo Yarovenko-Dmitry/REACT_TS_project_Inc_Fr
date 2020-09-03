@@ -1,9 +1,11 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import {makeStyles, Theme, createStyles, createMuiTheme} from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-import {Button} from '@material-ui/core';
+import {Button, DialogActions, Typography} from '@material-ui/core';
+
+const theme = createMuiTheme();
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -27,43 +29,42 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 type PropsType = {
+	isOpen: boolean
+	handleClose: () => void
+	title?: string
 	children?: any
 }
 
-export default function ModalWindow({children}:PropsType) {
+export default function ModalWindow({isOpen,handleClose,title,children}:PropsType) {
 	const classes = useStyles();
-	const [open, setOpen] = React.useState(false);
 
-	const handleOpen = () => {
-		setOpen(true);
-	};
-
-	const handleClose = () => {
-		setOpen(false);
-	};
+	function onClose() {
+		handleClose()
+	}
 
 	return (
 		<div>
-			<Button className={classes.button} type="button" onClick={handleOpen}
-			        variant="contained"
-			        color="primary"
-			>
-				ADD
-			</Button>
 			<Modal
 				aria-labelledby="transition-modal-title"
 				aria-describedby="transition-modal-description"
 				className={classes.modal}
-				open={open}
-				onClose={handleClose}
+				open={isOpen}
+				onClose={onClose}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{
 					timeout: 500,
 				}}
 			>
-				<Fade in={open}>
+				<Fade in={isOpen}>
 					<div className={classes.paper}>
+						<DialogActions>
+							<Button onClick={() => onClose()} color='primary'>Close</Button>
+						</DialogActions>
+						<Typography style={{padding: theme.spacing(2)}} component="h3"
+						            variant="h3">
+							{title}
+						</Typography>
 						{children}
 					</div>
 				</Fade>

@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 	}
 }));
 
-
 type PropsType = {
 	error?: boolean | string
 	formik?: any
