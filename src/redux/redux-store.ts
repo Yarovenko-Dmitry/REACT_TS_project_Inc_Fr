@@ -5,6 +5,7 @@ import passwordRecoveryReducer from './passwordRecovery-reducer';
 import pssawordCreationReducer from './pssawordCreation-reducer';
 import loginReducer from './login-reducer';
 import {appReducer} from "./app-reducer";
+import {cardReducer} from "./card-reducer";
 
 
 const reducers = combineReducers({
@@ -12,7 +13,8 @@ const reducers = combineReducers({
   pwRecoveryRequest: passwordRecoveryReducer,
   passwordUpdate: pssawordCreationReducer,
   login: loginReducer,
-  app: appReducer
+  app: appReducer,
+  card: cardReducer
 });
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));

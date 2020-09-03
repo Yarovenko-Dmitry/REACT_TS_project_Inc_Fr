@@ -54,14 +54,18 @@ export const authAPI = {
         return instance.post(`/auth/register`, {...data});
     }
 }
-
+export const cardsAPI = {
+    getCards() {
+        return instance.get<CardDataType>(`cards/card?cardsPack_id=5f21d2768c14693614f843d0`)
+    }
+}
 type RegisterDataType = {
     email: string,
     password: string
 }
 export type UsersDataType = {
     _id: string;
-    email: string;
+    email: string | undefined;
     name: string;
     avatar?: string;
     publicCardPacksCount: number; // количество колод
@@ -73,4 +77,25 @@ export type UsersDataType = {
     rememberMe: boolean;
 
     error: string;
+}
+export type CardDataType = {
+    cards: Array<CardsType>,
+    cardsTotalCount?: number,
+    maxGrade?: number,
+    minGrade?: number,
+    page?: number,
+    pageCount?: number
+}
+export type CardsType = {
+    answer: string,
+    question: string,
+    cardsPack_id: string,
+    grade: number,
+    rating: number,
+    shots: number,
+    type: string,
+    created: string,
+    updated: string,
+    __v: number,
+    _id: string,
 }

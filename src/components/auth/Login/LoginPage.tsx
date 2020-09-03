@@ -6,11 +6,11 @@ import {AppRootStateType} from '../../../redux/redux-store';
 
 
 export const LoginPage = () => {
-    const getState = useSelector<AppRootStateType, string>(state => state.login.userProfile.email)
+    const email = useSelector<AppRootStateType,any>(state => state.login.userProfile.email)
   return (
     <div>
       LoginPage
-      {getState}
+      {email}
       <LoginForm/>
     </div>
   )

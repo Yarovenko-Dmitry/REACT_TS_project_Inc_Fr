@@ -6,14 +6,14 @@ import {ThunkDispatch} from 'redux-thunk';
 
 export type LoginReducerType = {
     isAuth?: boolean,
-    userProfile: UsersDataType
+    userProfile: UsersDataType | any
 };
 
 let internalState: LoginReducerType = {
     isAuth: false,
     userProfile: {
         _id: '',
-        email: '',
+        email: '111',
         name: '',
         avatar: '',
         publicCardPacksCount: 0,
@@ -31,7 +31,7 @@ const loginReducer = (state: LoginReducerType = internalState, action: ActionTyp
     switch (action.type) {
         case 'login/SET_USER_DATA':
             return {
-                ...action.data
+                ...state, userProfile: action.data
             };
         case 'login/SET_LOADING':
             return {
@@ -74,9 +74,10 @@ type ActionTypes =
     | ReturnType<typeof authMeAC>
 
 export const setLoginTC = (email: string, password: string, rememberMe: boolean = false) => (dispatch: Dispatch<ActionTypes>) => {
+    debugger
     authAPI.login(email, password, rememberMe)
         .then(res => {
-
+debugger
                 dispatch(setUserDataAC(res.data))
             }
         )

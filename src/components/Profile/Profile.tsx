@@ -4,6 +4,10 @@ import {AppRootStateType} from "../../redux/redux-store";
 import loginReducer, {authMeTC, LoginReducerType} from "../../redux/login-reducer";
 import {Redirect} from "react-router-dom";
 import s from "./Profile.module.css";
+import {Find} from "../../common/Find";
+import {useFormik} from "formik";
+import {Table} from "../../common/MaterialTable";
+import PriceRange from "../../common/PriceRange";
 
 
 export const Profile = () => {
@@ -12,6 +16,14 @@ export const Profile = () => {
     const authState = useSelector<AppRootStateType, LoginReducerType>(state => state.login);
     const {isAuth, userProfile} = authState;
 
+    const formik = useFormik({
+        initialValues: {
+            search: '',
+        },
+        onSubmit: values => {
+            const {search} = values;
+        }
+    });
 
     useEffect(() => {
         dispatch(authMeTC());
@@ -27,7 +39,7 @@ export const Profile = () => {
             <div className={s.profileHeader}>
                 <div className={'container'}>
                     <div className={s.profileHeader__title}>Profile</div>
-                    <div className={s.profileHeader__link} >Logout</div>
+                    <div className={s.profileHeader__link}>Logout</div>
                 </div>
             </div>
 
@@ -36,6 +48,8 @@ export const Profile = () => {
 
                 </div>
             </div>
+            <Find formik={{...formik.getFieldProps('search')}}
+                  type={""} label={'Search'}/>
         </div>
     )
 }
