@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 const instance = axios.create({
-	withCredentials: true,
-	baseURL: 'https://neko-back.herokuapp.com/2.0',
+    withCredentials: true,
+    baseURL: 'https://neko-back.herokuapp.com/2.0',
 });
 
 export const mainContent = {
@@ -22,11 +22,11 @@ export const mainContent = {
 };
 
 export const passwordRecovery = {
-	getToken(email: string) {
-		let promise = instance.post(`/auth/forgot/`, {
-			email,
-			from: 'password-reset-server <noreply@noreply.it>',
-			message: `
+    getToken(email: string) {
+        let promise = instance.post(`/auth/forgot/`, {
+            email,
+            from: 'password-reset-server <noreply@noreply.it>',
+            message: `
 					<div style="background-color: lime; padding: 15px">
 					password recovery link: 
 					<a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
@@ -67,8 +67,48 @@ export const authAPI = {
 		return instance.post(`/auth/register`, {...data});
 	}
 };
+        });
+        return promise;
+    },
+    newPassword(password: string, resetPasswordToken: string) {
+        return instance.post(`/auth/set-new-password`, {password, resetPasswordToken})
+    }
+};
+
+export const authAPI = {
+    me() {
+        return instance.post<UsersDataType>(`auth/me`).then((res) => {
+            return res.data
+        })
+    },
+    login(email: string, password: string, rememberMe = false) {
+        return instance.post(`auth/login`, {email, password, rememberMe});
+    },
+    logout() {
+        return instance.delete(`auth/me`);
+    },
+    register(data: RegisterDataType) {
+
+        return instance.post(`/auth/register`, {...data});
+    }
+}
 
 type RegisterDataType = {
-	email: string,
-	password: string
+    email: string,
+    password: string
+}
+export type UsersDataType = {
+    _id: string;
+    email: string;
+    name: string;
+    avatar?: string;
+    publicCardPacksCount: number; // количество колод
+
+    created: any;
+    updated: any;
+    isAdmin: boolean;
+    verified: boolean; // подтвердил ли почту
+    rememberMe: boolean;
+
+    error: string;
 }

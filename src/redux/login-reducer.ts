@@ -1,90 +1,102 @@
 import {Dispatch} from 'redux';
-import {authAPI} from '../api/api';
-
+import {authAPI, UsersDataType} from '../api/api';
+import {AppRootStateType} from './redux-store';
+import { ThunkDispatch } from 'redux-thunk';
 
 export type LoginReducerType = {
-  _id: string;
-  email: string;
-  name: string;
-  avatar?: string;
-  publicCardPacksCount: number;
-  created: string;
-  updated: string;
-  isAdmin: boolean;
-  verified: boolean;
-  rememberMe: boolean;
-  error: string;
+  isAuth?: boolean,
+  userProfile: UsersDataType
 };
 
 let internalState: LoginReducerType = {
-  _id: '',
-  email: '',
-  name: '',
-  avatar: '',
-  publicCardPacksCount: 0,
-  created: '',
-  updated: '',
-  isAdmin: false,
-  verified: false,
-  rememberMe: false,
-  error: '',
+  isAuth: false,
+  userProfile: {
+    _id: '',
+    email: '',
+    name: '',
+    avatar: '',
+    publicCardPacksCount: 0,
+    created: 'YYYY-MM-DD',
+    updated: 'YYYY-MM-DD',
+    isAdmin: false,
+    verified: false,
+    rememberMe: false,
+    error: '',
+  }
 };
 
-const loginReducer = (state: LoginReducerType = internalState, action: ActionTypes) => {
+const loginReducer = (state: LoginReducerType = internalState, action: ActionTypes): LoginReducerType => {
 
   switch (action.type) {
     case 'login/SET_USER_DATA':
-      debugger
       return {
-        ...action.data
+        ...state,
+        userProfile: action.data,
+        isAuth: true
       };
-    case 'login/SET_LOADING':
+    case 'login/LOGOUT':
       return {
-        ...state, loading: action.loading
+        ...state,
+        isAuth: false
       };
-    case 'login/SET_ERROR':
-      return {
-        ...state, error: action.error
-      };
+    // Андрея - не трогать
+    case 'login/AUTH-ME':
+      return {...state, isAuth: action.isAuth, userProfile: action.userProfile};
+// Андрея - не трогать
     default:
       return state;
   }
 }
 
-const setUserDataAC = (data: LoginReducerType) => ({
+const loginAC = (data: UsersDataType) => ({
   type: 'login/SET_USER_DATA',
   data
 } as const);
 
-const setLoadingAC = (loading: boolean) => ({
-  type: 'login/SET_LOADING',
-  loading
-} as const);
-export const setErrorAC = (error: string) => ({
-  type: 'login/SET_ERROR',
-  error
+const logoutAC = () => ({
+  type: 'login/LOGOUT',
 } as const);
 
 type ActionTypes =
-  | ReturnType<typeof setErrorAC>
-  | ReturnType<typeof setUserDataAC>
-  | ReturnType<typeof setLoadingAC>
+  | ReturnType<typeof loginAC>
+  | ReturnType<typeof logoutAC>
+  // Андрея - не трогать
+  | ReturnType<typeof authMeAC>
+// Андрея - не трогать
 
 export const setLoginTC = (email: string, password: string, rememberMe: boolean = false) => (dispatch: Dispatch<ActionTypes>) => {
   authAPI.login(email, password, rememberMe)
     .then(res => {
-
-        dispatch(setUserDataAC(res.data))
+        dispatch(loginAC(res.data))
       }
     )
-    .catch(error => {
-      const {response} = error;
-      const {request, ...errorObject} = response;
-      // dispatch(setSuccessAC(false));
-      dispatch(setLoadingAC(false));
-      return dispatch(setErrorAC(errorObject.data.error));
-    });
 };
+
+export const logoutTC = () => (dispatch: Dispatch) => {
+  authAPI.logout()
+    .then(res => {
+      if (res.data.info === 'logOut success —ฅ/ᐠ.̫ .ᐟ\\ฅ—') {
+        dispatch(logoutAC())
+      }
+    })
+}
+
+// Андрея - не трогать
+export const authMeAC = (isAuth: boolean, userProfile: UsersDataType) => ({
+  type: 'login/AUTH-ME',
+  isAuth,
+  userProfile
+} as const);
+
+export const authMeTC = () => async (dispatch: ThunkDispatch<AppRootStateType, {}, ActionTypes>) => {
+  try {
+    const res = await authAPI.me();
+    dispatch(authMeAC(true, res));
+  } catch (e) {
+    console.log(e.response.data.error)
+  }
+}
+// Андрея - не трогать
 
 
 export default loginReducer
