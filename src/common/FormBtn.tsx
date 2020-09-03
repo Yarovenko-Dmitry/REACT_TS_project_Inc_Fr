@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 type PropsType = {
-	disable: boolean
+	disable?: boolean
 	name: string
 }
 

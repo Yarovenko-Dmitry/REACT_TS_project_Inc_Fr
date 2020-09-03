@@ -7,13 +7,13 @@ export type PasswordRecoveryReducerType = {
 	loading: boolean
 };
 
-let internalState: PasswordRecoveryReducerType = {
+let initialState: PasswordRecoveryReducerType = {
 	error: '',
 	success: false,
 	loading: false
 };
 
-const passwordRecoveryReducer = (state: PasswordRecoveryReducerType = internalState,
+const passwordRecoveryReducer = (state: PasswordRecoveryReducerType = initialState,
 	action: ActionTypes) => {
 	switch (action.type) {
 		case 'pwRecovery/SET_ERROR':
