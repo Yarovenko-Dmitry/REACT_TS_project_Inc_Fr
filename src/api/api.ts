@@ -32,6 +32,9 @@ export const mainContent = {
 					name: name
 				}
 			});
+	},
+	getCards(id: string) {
+		return instance.get(`/cards/card?cardsPack_id=${'5f2d10df3e3327237ccf6b47'}`)
 	}
 };
 

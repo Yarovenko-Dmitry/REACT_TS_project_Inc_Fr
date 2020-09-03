@@ -114,6 +114,7 @@ export const getPackOfCardsTC = (page: number, row: number) => (dispatch: Dispat
 			dispatch(setRange(res.data, min, max));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
 	});
 };
 
@@ -126,6 +127,8 @@ export const changeRange = (min: number, max: number) => (dispatch: Dispatch<Act
 		dispatch(setRange(res.data,min,max));
 	}
 	).catch(error => {
+		console.log(error.response.data.error)
+
 	});
 };
 
@@ -137,6 +140,7 @@ export const addNewPackTC = (name: string) => (dispatch: Dispatch<any>, getState
 			dispatch(getPackOfCardsTC(page, count));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
 	});
 };
 export const deletePackTC = (id: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
@@ -147,6 +151,7 @@ export const deletePackTC = (id: string) => (dispatch: Dispatch<any>, getState: 
 			dispatch(getPackOfCardsTC(page, count));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
 	});
 };
 
@@ -159,5 +164,6 @@ export const updatePackTC = (id: string, name: string) => (dispatch: Dispatch<an
 			dispatch(getPackOfCardsTC(page, count));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
 	});
 };

@@ -5,6 +5,7 @@ import passwordRecoveryReducer from './passwordRecovery-reducer';
 import pssawordCreationReducer from './pssawordCreation-reducer';
 import loginReducer from './login-reducer';
 import {packsReducer} from "./packs-reducer";
+import {cardsReducer} from "./cards-reducer";
 import {appReducer} from "./app-reducer";
 
 
@@ -14,6 +15,8 @@ const reducers = combineReducers({
   passwordUpdate: pssawordCreationReducer,
   login: loginReducer,
   packsReducer,
+  cardsReducer,
+
   app: appReducer
 });
 

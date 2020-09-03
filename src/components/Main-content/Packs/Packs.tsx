@@ -17,8 +17,10 @@ import ModalWindow from '../../../common/Modal';
 import InputField from '../../../common/InputField';
 import FormButton from '../../../common/FormBtn';
 import RangeSlider from '../../../common/RangeSlider';
-import Pagination from './Pagination';
-import TableData from './Table';
+import Pagination from '../../../common/Pagination';
+import TableData from '../../../common/Table';
+import { Route, Redirect } from 'react-router'
+
 
 const theme = createMuiTheme();
 theme.spacing(2);
@@ -56,6 +58,7 @@ const Packs = React.memo(function () {
 	const rows = useSelector<AppRootStateType, PackType[]>(state => state.packsReducer.cardPacks);
 	const page = useSelector<AppRootStateType, number>(state => state.packsReducer.page);
 	const pageCount = useSelector<AppRootStateType, number>(state => state.packsReducer.pageCount);
+	const isAuth = useSelector<AppRootStateType, boolean | any>(state => state.login.isAuth);
 	const cardPacksTotalCount = useSelector<AppRootStateType, number>(state => state.packsReducer.cardPacksTotalCount);
 	const dispatch = useDispatch();
 
@@ -70,6 +73,10 @@ const Packs = React.memo(function () {
 
 	const onDeleteHandler = (id: string) => {
 		dispatch(deletePackTC(id));
+	};
+
+	const onOpenHandler = (id: string) => {
+		console.log(id)
 	};
 
 	const onUpdateHandler = (id: string, name: string) => {
@@ -87,59 +94,64 @@ const Packs = React.memo(function () {
 	const tableCell = [
 		{name: 'Name', align: 'inherit'},
 		{name: 'Card Count', align: 'center'},
-		{name: 'Add', align: 'right'},
+		{name: 'Open', align: 'right'},
 		{name: 'Delete', align: 'center'},
 		{name: 'Modify', align: 'left'},
 		{name: 'Updated', align: 'right'},
 	];
 
-	return (
-		<div>
-			<TableContainer component={Paper}>
-				<Grid
-					style={{marginTop: theme.spacing(2)}}
-					container
-					direction="row"
-					justify="space-between"
-					alignItems="center"
-				>
-					<Grid item xs={6}>
-						<Typography className={classes.margin} variant="h3">Packs</Typography>
+
+	if (isAuth) {
+		return (
+			<div>
+				<TableContainer component={Paper}>
+					<Grid
+						style={{marginTop: theme.spacing(2)}}
+						container
+						direction="row"
+						justify="space-between"
+						alignItems="center"
+					>
+						<Grid item xs={6}>
+							<Typography className={classes.margin} variant="h3">Packs</Typography>
+						</Grid>
+						<Grid item xs={3}>
+							<RangeSlider maxRange={20} minRange={0}/>
+						</Grid>
+						<Grid item xs={3}>
+							<Button
+								onClick={() => handleDialogOpen()}
+								variant="contained"
+								color="primary"
+								className={classes.button}
+								startIcon={<AddBoxIcon/>}
+							>
+								ADD PACK
+							</Button>
+							<ModalWindow handleClose={handleDialogClose} isOpen={isOpen} title={'Add' +
+							' new pack'}>
+								<form onSubmit={onAddNewPackHandler}>
+									<Grid container spacing={2}>
+										<InputField value={newName}
+										            type={'text'} label={'Set new name'}
+										            onChange={setNewName}/>
+										<FormButton name={'Send'}/>
+									</Grid>
+								</form>
+							</ModalWindow>
+						</Grid>
 					</Grid>
-					<Grid item xs={3}>
-						<RangeSlider maxRange={20} minRange={0}/>
-					</Grid>
-					<Grid item xs={3}>
-						<Button
-							onClick={() => handleDialogOpen()}
-							variant="contained"
-							color="primary"
-							className={classes.button}
-							startIcon={<AddBoxIcon/>}
-						>
-							ADD PACK
-						</Button>
-						<ModalWindow handleClose={handleDialogClose} isOpen={isOpen} title={'Add' +
-						' new pack'}>
-							<form onSubmit={onAddNewPackHandler}>
-								<Grid container spacing={2}>
-									<InputField value={newName}
-									            type={'text'} label={'Set new name'}
-									            onChange={setNewName}/>
-									<FormButton name={'Send'}/>
-								</Grid>
-							</form>
-						</ModalWindow>
-					</Grid>
-				</Grid>
-				<TableData data={rows} onDelete={onDeleteHandler}
-				           heading={tableCell} onModify={onUpdateHandler}
-				           onAdd={onAddNewPackHandler}/>
-			</TableContainer>
-			<Pagination count={cardPacksTotalCount} page={page - 1}
-			            rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
-			            rowsPerPage={pageCount} onChangeRowsPerPage={onChangeRowLength}/>
-		</div>
-	);
+					<TableData data={rows} onDelete={onDeleteHandler}
+					           heading={tableCell} onModify={onUpdateHandler}
+					           onOpen={onOpenHandler}/>
+				</TableContainer>
+				<Pagination count={cardPacksTotalCount} page={page - 1}
+				            rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
+				            rowsPerPage={pageCount} onChangeRowsPerPage={onChangeRowLength}/>
+			</div>
+		)
+	}
+	return <Redirect to={'/login'}/>
+
 });
 export default Packs;

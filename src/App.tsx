@@ -9,6 +9,7 @@ import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecov
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
 import Packs from './components/Main-content/Packs/Packs';
 import WrongPage from './components/WrongPage';
+import Cards from './components/Main-content/Cards/Cards';
 
 function App() {
 
@@ -30,6 +31,8 @@ function App() {
 					       render={() => <PasswordCreation/>}/>
 					<Route path={'/packs'}
 					       render={() => <Packs/>}/>
+				    <Route path={'/cards'}
+					       render={() => <Cards/>}/>
 					<Route path={'*'}
 					       render={() => <WrongPage/>}/>
 				</Switch>

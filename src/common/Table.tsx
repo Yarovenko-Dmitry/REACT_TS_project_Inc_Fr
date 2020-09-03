@@ -41,10 +41,10 @@ type PropsType = {
 	heading: Array<DataType>
 	onDelete: (id: string) => void
 	onModify: (id: string, name: string) => void
-	onAdd: (id: string) => void
+	onOpen: (id: string) => void
 }
 
-const TableData = ({data, onDelete, onModify, onAdd, heading}: PropsType) => {
+const TableData = ({data, onDelete, onModify, onOpen, heading}: PropsType) => {
 
 	const classes = useStyles();
 
@@ -60,8 +60,8 @@ const TableData = ({data, onDelete, onModify, onAdd, heading}: PropsType) => {
 	const onModifyHandler = (id: string) => {
 		onModify(id, 'asd');
 	};
-	const onAddHandler = (id: string) => {
-		onAdd(id);
+	const onOpenHandler = (id: string) => {
+		onOpen(id);
 	};
 
 	return (
@@ -82,7 +82,7 @@ const TableData = ({data, onDelete, onModify, onAdd, heading}: PropsType) => {
 						<TableCell align="center">{row.cardsCount}</TableCell>
 						<TableCell align="right">
 							<IconButton style={{color: randomColor()}}
-							            onClick={() => onAddHandler(row._id)}
+							            onClick={() => onOpenHandler(row._id)}
 							            className={classes.padding} aria-label="add">
 								<AddBoxIcon fontSize="small"/>
 							</IconButton>
