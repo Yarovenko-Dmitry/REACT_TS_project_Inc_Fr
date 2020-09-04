@@ -42,7 +42,7 @@ export const tableIcons: Icons = {
 };
 
 
-export const Table = () => {
+export const Cards = () => {
     const pageCount = useSelector<AppRootStateType,number| undefined>(state => state.card.cardsTotalCount)
     const answer = useSelector<AppRootStateType,Array<CardsType>>(state => state.card.cards)
     const dispatch = useDispatch();

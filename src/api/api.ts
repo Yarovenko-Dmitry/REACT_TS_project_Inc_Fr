@@ -60,7 +60,7 @@ export const authAPI = {
 }
 export const cardsAPI = {
     getCards() {
-        return instance.get<CardDataType>(`cards/card?cardsPack_id=5f21d2768c14693614f843d0`)
+        return instance.get<CardDataType>(`cards/card?cardsPack_id=5f48315d4097af0004b9cd3e`)
     }
 }
 type RegisterDataType = {
