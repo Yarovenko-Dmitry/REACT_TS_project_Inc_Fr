@@ -107,11 +107,10 @@ type ActionTypes =
 
 export const getPackOfCardsTC = (page: number, row: number) => (dispatch: Dispatch<ActionTypes>,
 	getState: () => AppRootStateType) => {
-	const min = getState().packsReducer.minCardsCount;
-	const max = getState().packsReducer.maxCardsCount;
-	mainContent.getPacksOfCards(page, row, min, max).then(
+	const {minCardsCount, maxCardsCount} = getState().packsReducer
+	mainContent.getPacksOfCards(page, row, minCardsCount, maxCardsCount).then(
 		res => {
-			dispatch(setRange(res.data, min, max));
+			dispatch(setRange(res.data, minCardsCount, maxCardsCount));
 		}
 	).catch(error => {
 		console.log(error.response.data.error)
@@ -120,9 +119,8 @@ export const getPackOfCardsTC = (page: number, row: number) => (dispatch: Dispat
 
 export const changeRange = (min: number, max: number) => (dispatch: Dispatch<ActionTypes>,
 	getState: () => AppRootStateType) => {
-	const page = getState().packsReducer.page;
-	const count = getState().packsReducer.pageCount;
-	mainContent.getRangedCards(page, count, min, max).then(
+	const {page, pageCount} = getState().packsReducer
+	mainContent.getRangedCards(page, pageCount, min, max).then(
 	res => {
 		dispatch(setRange(res.data,min,max));
 	}
@@ -133,22 +131,20 @@ export const changeRange = (min: number, max: number) => (dispatch: Dispatch<Act
 };
 
 export const addNewPackTC = (name: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
-	const page = getState().packsReducer.page;
-	const count = getState().packsReducer.pageCount;
+	const {page, pageCount} = getState().packsReducer
 	mainContent.addNewPack(name).then(
 		res => {
-			dispatch(getPackOfCardsTC(page, count));
+			dispatch(getPackOfCardsTC(page, pageCount));
 		}
 	).catch(error => {
 		console.log(error.response.data.error)
 	});
 };
 export const deletePackTC = (id: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
-	const page = getState().packsReducer.page;
-	const count = getState().packsReducer.pageCount;
+	const {page, pageCount} = getState().packsReducer
 	mainContent.deletePack(id).then(
 		res => {
-			dispatch(getPackOfCardsTC(page, count));
+			dispatch(getPackOfCardsTC(page, pageCount));
 		}
 	).catch(error => {
 		console.log(error.response.data.error)
@@ -157,11 +153,10 @@ export const deletePackTC = (id: string) => (dispatch: Dispatch<any>, getState: 
 
 export const updatePackTC = (id: string, name: string) => (dispatch: Dispatch<any>,
 	getState: () => AppRootStateType) => {
-	const page = getState().packsReducer.page;
-	const count = getState().packsReducer.pageCount;
+	const {page, pageCount} = getState().packsReducer
 	mainContent.updatePack(id, name).then(
 		res => {
-			dispatch(getPackOfCardsTC(page, count));
+			dispatch(getPackOfCardsTC(page, pageCount));
 		}
 	).catch(error => {
 		console.log(error.response.data.error)

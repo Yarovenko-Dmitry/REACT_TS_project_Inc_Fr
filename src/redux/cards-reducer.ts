@@ -9,9 +9,10 @@ export type StateType = {
 	minGrade: number
 	page: number
 	pageCount: number
+	id: string
 };
 
-type CardType = {
+export type CardType = {
 	answer: string
 	question: string
 	cardsPack_id: string
@@ -31,7 +32,8 @@ let initialState: StateType = {
 	maxGrade: 0,
 	minGrade: 0,
 	page: 1,
-	pageCount: 4
+	pageCount: 4,
+	id: ''
 };
 
 export const cardsReducer = (state: StateType = initialState,
@@ -39,7 +41,7 @@ export const cardsReducer = (state: StateType = initialState,
 	switch (action.type) {
 		case 'cards/SET_CARDS':
 			return {
-				...state, ...action.data
+				...state, ...action.data, id: action.id
 
 			}
 		default:
@@ -47,22 +49,47 @@ export const cardsReducer = (state: StateType = initialState,
 	}
 };
 
-
-const setCards = (data: StateType) => ({
+const setCards = (data: StateType, id:string) => ({
 	type: 'cards/SET_CARDS',
-	data
+	data,
+	id
 })
-
 
 type ActionTypes =
 	ReturnType<typeof setCards>
 
-export const getCardsTC = (id: string) => (dispatch: Dispatch<any>) => {
-	mainContent.getCards(id).then(
+export const getCardsTC = (id: string) => (dispatch: Dispatch<any>,getState: () => AppRootStateType) => {
+	const {page, pageCount} = getState().cardsReducer;
+	mainContent.getCards(id, page, pageCount).then(
 		res => {
-			dispatch(setCards(res.data));
+			dispatch(setCards(res.data, id));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
+
+export const getNewPageTC = (page:number,row:number) => (dispatch: Dispatch<any>,getState: () => AppRootStateType) => {
+	const {id} = getState().cardsReducer;
+	mainContent.getCards(id, page, row).then(
+		res => {
+			dispatch(setCards(res.data, id));
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
+
+export const addNewCardTC = (question:string,answer:string) => (dispatch: Dispatch<any>,getState: () => AppRootStateType) => {
+	const {id} = getState().cardsReducer;
+	mainContent.addNewCard(id, question, answer).then(
+		res => {
+			debugger
+			dispatch(getCardsTC(id));
+
+		}
+	).catch(error => {
+		debugger
 		console.log(error.response.data.error)
 	});
 };

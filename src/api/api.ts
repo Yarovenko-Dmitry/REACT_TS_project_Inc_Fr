@@ -33,9 +33,18 @@ export const mainContent = {
 				}
 			});
 	},
-	getCards(id: string) {
-		return instance.get(`/cards/card?cardsPack_id=${'5f2d10df3e3327237ccf6b47'}`)
-	}
+	getCards(id: string, page: number, row: number) {
+		return instance.get(`/cards/card?cardsPack_id=${id}&page=${page}&pageCount=${row}`);
+	},
+	addNewCard(id: string, question: string, answer: string) {
+		return instance.post(`/cards/card`, {
+			card: {
+				cardsPack_id: id,
+				question,
+				answer
+			}
+		});
+	},
 };
 
 export const passwordRecovery = {
@@ -70,34 +79,34 @@ export const profileAPI = {
 };
 
 export const authAPI = {
-    me() {
-        return instance.post<UsersDataType>(`auth/me`).then((res) => {
-            return res.data
-        })
-    },
-    login(email: string, password: string, rememberMe = false) {
-        return instance.post(`auth/login`, {email, password, rememberMe});
+	me() {
+		return instance.post<UsersDataType>(`auth/me`).then((res) => {
+			return res.data;
+		});
+	},
+	login(email: string, password: string, rememberMe = false) {
+		return instance.post(`auth/login`, {email, password, rememberMe});
 
-    },
-    logout() {
-        return instance.delete(`auth/me`);
-    },
-    register(data: RegisterDataType) {
+	},
+	logout() {
+		return instance.delete(`auth/me`);
+	},
+	register(data: RegisterDataType) {
 
-        return instance.post(`/auth/register`, {...data});
-    }
-}
+		return instance.post(`/auth/register`, {...data});
+	}
+};
 
 type RegisterDataType = {
 	email: string,
 	password: string
 }
 export type UsersDataType = {
-    _id: string;
-    email: string | undefined;
-    name: string;
-    avatar?: string;
-    publicCardPacksCount: number; // количество колод
+	_id: string;
+	email: string | undefined;
+	name: string;
+	avatar?: string;
+	publicCardPacksCount: number; // количество колод
 	created: any;
 	updated: any;
 	isAdmin: boolean;
@@ -107,23 +116,23 @@ export type UsersDataType = {
 }
 
 export type CardDataType = {
-    cards: Array<CardsType>,
-    cardsTotalCount?: number,
-    maxGrade?: number,
-    minGrade?: number,
-    page?: number,
-    pageCount?: number
+	cards: Array<CardsType>,
+	cardsTotalCount?: number,
+	maxGrade?: number,
+	minGrade?: number,
+	page?: number,
+	pageCount?: number
 }
 export type CardsType = {
-    answer: string,
-    question: string,
-    cardsPack_id: string,
-    grade: number,
-    rating: number,
-    shots: number,
-    type: string,
-    created: string,
-    updated: string,
-    __v: number,
-    _id: string,
+	answer: string,
+	question: string,
+	cardsPack_id: string,
+	grade: number,
+	rating: number,
+	shots: number,
+	type: string,
+	created: string,
+	updated: string,
+	__v: number,
+	_id: string,
 }
