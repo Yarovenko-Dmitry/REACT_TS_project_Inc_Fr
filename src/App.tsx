@@ -31,7 +31,7 @@ function App() {
 					       render={() => <PasswordCreation/>}/>
 					<Route path={'/packs'}
 					       render={() => <Packs/>}/>
-				    <Route path={'/cards'}
+				    <Route path={'/сards'}
 					       render={() => <Cards/>}/>
 					<Route path={'*'}
 					       render={() => <WrongPage/>}/>
