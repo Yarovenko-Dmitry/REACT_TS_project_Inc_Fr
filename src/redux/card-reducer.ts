@@ -29,6 +29,7 @@ export const cardReducer = (state: CardDataType = internalState, action: Actions
 
     switch (action.type) {
         case "card/GET-CARD":
+            debugger
             return {...state = action.data}
         default:
             return state;
