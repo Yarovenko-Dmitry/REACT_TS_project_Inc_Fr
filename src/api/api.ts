@@ -70,39 +70,60 @@ export const profileAPI = {
 };
 
 export const authAPI = {
-	me() {
-		return instance.post<UsersDataType>(`auth/me`).then((res) => {
-			return res.data;
-		});
-	},
-	login(email: string, password: string, rememberMe = false) {
-		return instance.post(`auth/login`, {email, password, rememberMe});
-	},
-	logout() {
-		return instance.delete(`auth/me`);
-	},
-	register(data: RegisterDataType) {
+    me() {
+        return instance.post<UsersDataType>(`auth/me`).then((res) => {
+            return res.data
+        })
+    },
+    login(email: string, password: string, rememberMe = false) {
+        return instance.post(`auth/login`, {email, password, rememberMe});
 
-		return instance.post(`/auth/register`, {...data});
-	}
-};
+    },
+    logout() {
+        return instance.delete(`auth/me`);
+    },
+    register(data: RegisterDataType) {
+
+        return instance.post(`/auth/register`, {...data});
+    }
+}
 
 type RegisterDataType = {
 	email: string,
 	password: string
 }
 export type UsersDataType = {
-	_id: string;
-	email: string;
-	name: string;
-	avatar?: string;
-	publicCardPacksCount: number; // количество колод
-
+    _id: string;
+    email: string | undefined;
+    name: string;
+    avatar?: string;
+    publicCardPacksCount: number; // количество колод
 	created: any;
 	updated: any;
 	isAdmin: boolean;
 	verified: boolean; // подтвердил ли почту
 	rememberMe: boolean;
-
 	error: string;
+}
+
+export type CardDataType = {
+    cards: Array<CardsType>,
+    cardsTotalCount?: number,
+    maxGrade?: number,
+    minGrade?: number,
+    page?: number,
+    pageCount?: number
+}
+export type CardsType = {
+    answer: string,
+    question: string,
+    cardsPack_id: string,
+    grade: number,
+    rating: number,
+    shots: number,
+    type: string,
+    created: string,
+    updated: string,
+    __v: number,
+    _id: string,
 }

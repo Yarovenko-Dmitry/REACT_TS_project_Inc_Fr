@@ -2,11 +2,11 @@ import React from 'react';
 import './App.css';
 import Navbar from './components/Navbar/Navbar';
 import {Route, Switch} from 'react-router-dom';
-import {ProfileContainer} from './components/Profile/ProfileContainer';
 import {LoginPage} from './components/auth/Login/LoginPage';
 import {RegisterContainer} from './components/auth/Register/RegisterContainer';
 import {PasswordRecovery} from './components/auth/PasswordRecovery/PasswordRecovery';
 import {PasswordCreation} from './components/auth/PasswordCreation/PasswordCreation';
+import {Profile} from "./components/Profile/Profile";
 import Packs from './components/Main-content/Packs/Packs';
 import WrongPage from './components/WrongPage';
 import Cards from './components/Main-content/Cards/Cards';
@@ -20,7 +20,7 @@ function App() {
 			</header>
 				<Switch>
 					<Route path={'/profile/:userId?'}
-					       render={() => <ProfileContainer/>}/>
+                   render={() => <Profile/>}/>
 					<Route path={'/login'}
 					       render={() => <LoginPage/>}/>
 					<Route path={'/register'}
