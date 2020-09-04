@@ -31,10 +31,10 @@ export type PackType = {
 
 let initialState: PacksReducerType = {
 	cardPacks: [],
-	page: 1,
+	page: 0,
 	pageCount: 10,
 	minCardsCount: 0,
-	maxCardsCount: 4,
+	maxCardsCount: 20,
 	cardPacksTotalCount: 1
 
 };
@@ -44,7 +44,7 @@ export const packsReducer = (state: PacksReducerType = initialState,
 	switch (action.type) {
 		case 'packs/SET_PACKS':
 			return {
-				...state, cardPacks: action.packs,
+				...state, cardPacks: action.cardsPacks,
 				page: action.page,
 				pageCount: action.pageCount,
 				cardPacksTotalCount: action.cardPacksTotalCount,
@@ -58,68 +58,112 @@ export const packsReducer = (state: PacksReducerType = initialState,
 				pageCount: action.pageCount
 
 			};
-		case 'packs/SET_ROW':
+		case 'packs/SET_RANGE':
 			return {
-				...state,
-				page: action.pageCount,
+				...state, cardPacks: action.cardPacks,
+				page: action.page,
+				pageCount: action.pageCount,
+				cardPacksTotalCount: action.cardPacksTotalCount,
+				minCardsCount: action.minCardsCount,
+				maxCardsCount: action.maxCardsCount,
 			};
 		default:
 			return state;
 	}
 };
 
-export const setPackOfCards = (data: any) => ({
+export const setPackOfCards = (cardsPacks: PackType[], page:number,
+	pageCount:number, cardPacksTotalCount: number, minCardsCount: number,
+	maxCardsCount:number ) => ({
 	type: 'packs/SET_PACKS',
-	packs: data.cardPacks,
-	page: data.page,
-	pageCount: data.pageCount,
-	cardPacksTotalCount: data.cardPacksTotalCount,
-	minCardsCount: data.minCardsCount,
-	maxCardsCount: data.maxCardsCount
+	cardsPacks,
+	page,
+	pageCount,
+	cardPacksTotalCount,
+	minCardsCount,
+	maxCardsCount
 } as const);
 
-export const setPage = (data: any) => ({
+export const setPage = (page: number, pageCount: number) => ({
 	type: 'packs/SET_PAGE',
-	page: data.page,
-	pageCount: data.pageCount
-} as const);
-export const setRow = (pageCount: number) => ({
-	type: 'packs/SET_ROW',
+	page,
 	pageCount
 } as const);
 
+export const setRange = (data: any,min:number,max:number) => ({
+	type: 'packs/SET_RANGE',
+	cardPacks: data.cardPacks,
+	page: data.page,
+	pageCount: data.pageCount,
+	cardPacksTotalCount: data.cardPacksTotalCount,
+	minCardsCount: min,
+	maxCardsCount: max,
+} as const);
 
-type ActionTypes = ReturnType<typeof setPackOfCards> | ReturnType<typeof setPage>| ReturnType<typeof setRow>
+type ActionTypes =
+	ReturnType<typeof setPackOfCards>
+	| ReturnType<typeof setPage>
+	| ReturnType<typeof setRange>
 
-export const getPackOfCardsTC = (page:number,row:number) => (dispatch: Dispatch<ActionTypes>) => {
-	mainContent.getPacksOfCards(page, row).then(
+export const getPackOfCardsTC = (page: number, row: number) => (dispatch: Dispatch<ActionTypes>,
+	getState: () => AppRootStateType) => {
+	const min = getState().packsReducer.minCardsCount;
+	const max = getState().packsReducer.maxCardsCount;
+	mainContent.getPacksOfCards(page, row, min, max).then(
 		res => {
-			dispatch(setPackOfCards(res.data));
-			console.log('data after request', res.data);
+			dispatch(setRange(res.data, min, max));
 		}
 	).catch(error => {
+		console.log(error.response.data.error)
 	});
 };
 
-export const changeRange = (min:number,max:number) => (dispatch: Dispatch<ActionTypes>, getState: any) => {
-	const page = getState().packsReducer.page
-	const count = getState().packsReducer.cardsCount
+export const changeRange = (min: number, max: number) => (dispatch: Dispatch<ActionTypes>,
+	getState: () => AppRootStateType) => {
+	const page = getState().packsReducer.page;
+	const count = getState().packsReducer.pageCount;
 	mainContent.getRangedCards(page, count, min, max).then(
-		res => {
-			dispatch(setPackOfCards(res.data));
-		}
+	res => {
+		dispatch(setRange(res.data,min,max));
+	}
 	).catch(error => {
+		console.log(error.response.data.error)
+
 	});
 };
 
-export const addNewPackTC = (name: string) => (dispatch: Dispatch<any>, getState: any) => {
-	const page = getState().packsReducer.page
-	const count = getState().packsReducer.cardsCount
+export const addNewPackTC = (name: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+	const page = getState().packsReducer.page;
+	const count = getState().packsReducer.pageCount;
 	mainContent.addNewPack(name).then(
 		res => {
-			dispatch(getPackOfCardsTC(page,count));
+			dispatch(getPackOfCardsTC(page, count));
 		}
-).catch(error => {
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
+export const deletePackTC = (id: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+	const page = getState().packsReducer.page;
+	const count = getState().packsReducer.pageCount;
+	mainContent.deletePack(id).then(
+		res => {
+			dispatch(getPackOfCardsTC(page, count));
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
 
-});
+export const updatePackTC = (id: string, name: string) => (dispatch: Dispatch<any>,
+	getState: () => AppRootStateType) => {
+	const page = getState().packsReducer.page;
+	const count = getState().packsReducer.pageCount;
+	mainContent.updatePack(id, name).then(
+		res => {
+			dispatch(getPackOfCardsTC(page, count));
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
 };

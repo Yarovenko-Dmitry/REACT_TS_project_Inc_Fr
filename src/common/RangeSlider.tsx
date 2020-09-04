@@ -22,8 +22,10 @@ export default function RangeSlider({minRange,maxRange}:PropsType) {
 
 	const dispatch = useDispatch();
 
-	const handleChange = (event: any, newValue: number | number[]) => {
-		dispatch(changeRange(value[0],value[1]))
+	const handleChange = (event: any, newValue: number | number[] | any) => {
+		if (newValue) {
+			dispatch(changeRange(newValue[0],newValue[1]))
+		}
 		console.log(newValue)
 		setValue(newValue as number[]);
 	};
@@ -36,11 +38,11 @@ export default function RangeSlider({minRange,maxRange}:PropsType) {
 			<Slider
 				value={value}
 				min={minRange}
-				step={1}
+				step={5}
 				max={maxRange}
 				onChange={handleChange}
-				valueLabelDisplay="auto"
 				aria-labelledby="range-slider"
+				valueLabelDisplay="on"
 			/>
 		</div>
 	);
