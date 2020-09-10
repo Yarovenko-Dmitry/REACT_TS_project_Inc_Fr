@@ -133,7 +133,6 @@ const Packs = React.memo(function () {
     {name: 'Updated', align: 'right'},
   ];
 //
-
   const randomColor = useCallback(() => {
     let color = 'rgb(' + Math.round(Math.random() * 255)
       + ',' + Math.round(Math.random() * 255) + ',' + Math.round(Math.random() * 255) + ')';
