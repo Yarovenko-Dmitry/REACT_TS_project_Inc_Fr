@@ -59,8 +59,6 @@ const Packs = React.memo(function () {
   const [currentPackName, setCurrentPackName] = useState('');
   const [updatePackId, setUpdatePackId] = useState('');
 
-  const [updatedPackName, setUpdatedPackName] = useState('');
-  const [STUBupdatedPackName, STUBsetUpdatedPackName] = useState('');
   const [isOpenAddPackModalPopup, setIsOpenAddPackModalPopup] = useState(false);
   const [isOpenModifyPackModalPopup, setIsOpenModifyPackModalPopup] = useState(false);
 
@@ -89,7 +87,7 @@ const Packs = React.memo(function () {
   };
 
   const onModifyPackHandler = () => {
-    dispatch(updatePackTC(updatePackId, updatedPackName));
+    dispatch(updatePackTC(updatePackId, currentPackName));
     setIsOpenModifyPackModalPopup(false);
   };
 
@@ -109,7 +107,6 @@ const Packs = React.memo(function () {
   };
 
   const handleModifyPackModalPopupOpen = (id: string) => {
-    setUpdatedPackName('');
     setUpdatePackId(id);
     setIsOpenModifyPackModalPopup(true);
     onUpdateHandler(id);
@@ -223,19 +220,14 @@ const Packs = React.memo(function () {
         </ModalWindow>
         <ModalWindow handleClose={handleModifyPackModalPopupClose} isOpen={isOpenModifyPackModalPopup} title={'Modify' +
         ' pack name'}>
-
           <form onSubmit={onModifyPackHandler}>
             <Grid container spacing={2}>
-              <InputField value={currentPackName}
-                          type={'text'}
-                          onChange={STUBsetUpdatedPackName}
-              />
               <InputField
-                value={updatedPackName}
+                value={currentPackName}
                 type={'text'} label={'Set new pack name'}
-                onChange={setUpdatedPackName}
+                onChange={setCurrentPackName}
               />
-              <FormButton name={'Send-test'}/>
+              <FormButton name={'Send updated pack name'}/>
             </Grid>
           </form>
         </ModalWindow>
