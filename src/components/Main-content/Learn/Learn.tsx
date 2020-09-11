@@ -116,6 +116,11 @@ const Learn = (props: PropsType) => {
     const onHoverHandlerDisable = () => {
         setIsFlipped(false)
     }
+
+	const onGradeHandler = (i: number) => {
+		dispatch(sendGradeTC(card._id, i + 1));
+	};
+
     return (
         <div className={s.cards_wrapper}>
             {isChecked ? (
@@ -141,8 +146,8 @@ const Learn = (props: PropsType) => {
                             {card.answer}
                         </div>
                         {grades.map((g, i) => (
-                            <Button key={'grade-' + i} onClick={() => {
-                            }} className={classes.buttonGrade}>{g}</Button>
+													<Button key={'grade-' + i} onClick={() => onGradeHandler(i)}
+																	className={classes.buttonGrade}>{g}</Button>
                         ))}
                         <div><Button onClick={onNext} className={classes.buttonControl}>next</Button></div>
                     </div>
