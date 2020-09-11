@@ -62,7 +62,6 @@ const Cards = () => {
   // 	}
   // }
 
-
   const handleDialogOpen = () => {
     setIsOpenAddCardModalPopup(true);
   };
