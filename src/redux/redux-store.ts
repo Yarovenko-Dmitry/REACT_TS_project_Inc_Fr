@@ -7,8 +7,6 @@ import loginReducer from './login-reducer';
 import {packsReducer} from "./packs-reducer";
 import {cardsReducer} from "./cards-reducer";
 import {appReducer} from "./app-reducer";
-import learnReducer from "./learnReducer";
-
 
 const reducers = combineReducers({
   register: registerReducer,
@@ -18,8 +16,6 @@ const reducers = combineReducers({
   packsReducer,
   cardsReducer,
   app: appReducer,
-  learn: learnReducer
-
 });
 
 export const store = createStore(reducers, applyMiddleware(thunkMiddleware));

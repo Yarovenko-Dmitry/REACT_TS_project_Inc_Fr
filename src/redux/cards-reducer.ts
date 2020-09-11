@@ -44,7 +44,6 @@ export const cardsReducer = (state: StateType = initialState,
 		case 'cards/SET_CARDS':
 			return {
 				...state, ...action.data, id: action.id
-
 			}
 		default:
 			return state;
@@ -86,12 +85,21 @@ export const addNewCardTC = (question:string,answer:string) => (dispatch: Dispat
 	const {id} = getState().cardsReducer;
 	mainContent.addNewCard(id, question, answer).then(
 		res => {
-			debugger
 			dispatch(getCardsTC(id));
 
 		}
 	).catch(error => {
-		debugger
+		console.log(error.response.data.error)
+	});
+};
+
+export const sendGradeTC = (cardId:string,grade:number) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+	const {id} = getState().cardsReducer;
+	mainContent.sendCardGrade(cardId, grade).then(
+		res => {
+			dispatch(getCardsTC(id));
+		}
+	).catch(error => {
 		console.log(error.response.data.error)
 	});
 };
