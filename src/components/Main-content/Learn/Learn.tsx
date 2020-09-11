@@ -3,11 +3,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {CardType, getCardsTC, sendGradeTC} from '../../../redux/cards-reducer';
 import s from './Learn.module.scss';
 import {useParams} from 'react-router-dom';
-import {Button, createMuiTheme} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
-import {AppRootStateType} from '../../../redux/redux-store';
+import {Button, createMuiTheme} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core/styles";
+import {AppRootStateType} from "../../../redux/redux-store";
+import ReactCardFlip from "react-card-flip";
 
 const theme = createMuiTheme();
+theme.spacing(2);
 
 const useStyles = makeStyles({
 	padding: {
@@ -46,6 +48,8 @@ const useStyles = makeStyles({
 	}
 });
 
+type PropsType = {}
+
 const grades = ['не знал', 'забыл', 'долго думал', 'перепутал', 'знал'];
 
 const getCard = (cards: CardType[]) => {
@@ -58,30 +62,35 @@ const getCard = (cards: CardType[]) => {
 	return cards[res.id + 1];
 };
 
-const Learn = () => {
-	const classes = useStyles();
-	const dispatch = useDispatch();
 
-	const [isChecked, setIsChecked] = useState<boolean>(true);
-	const [isHovered, setIsHovered] = useState<boolean>(true);
-	const [first, setFirst] = useState<boolean>(true);
-	// const [first, setFirst] = useState<boolean>(0);
-	const {cards} = useSelector((store: AppRootStateType) => store.cardsReducer);
-	const {id} = useParams();
+const Learn = (props: PropsType) => {
+    const classes = useStyles();
+    const dispatch = useDispatch();
 
-	const [card, setCard] = useState<CardType>({
-		_id: 'fake',
-		cardsPack_id: '',
-		answer: 'answer fake',
-		question: 'question fake',
-		grade: 1,
-		shots: 0,
-		type: '',
-		rating: 0,
-		more_id: '',
-		created: '',
-		updated: '',
-	});
+    const [isChecked, setIsChecked] = useState<boolean>(true);
+    const [isHovered, setIsHovered] = useState<boolean>(true);
+    const [isFlipped, setIsFlipped] = useState<boolean>(false);
+    const [first, setFirst] = useState<boolean>(true);
+    // const [first, setFirst] = useState<boolean>(0);
+    const {cards} = useSelector((store: AppRootStateType) => store.cardsReducer);
+    const {id} = useParams();
+
+    const [card, setCard] = useState<CardType>({
+        _id: 'fake',
+        cardsPack_id: '',
+
+        answer: 'answer fake',
+        question: 'question fake',
+        grade: 1,
+        shots: 0,
+
+        type: '',
+        rating: 0,
+        more_id: '',
+
+        created: '',
+        updated: '',
+    });
 
 	useEffect(() => {
 		if (first) {
@@ -99,46 +108,50 @@ const Learn = () => {
 			setCard(getCard(cards));
 		} else {
 
-		}
-	};
-	const onHoverHandlerEnable = () => {
-		//setIsHovered(false)
-	};
-	const onHoverHandlerDisable = () => {
-		//setIsHovered(true)
-	};
+        }
+    }
+    const onHoverHandlerEnable = () => {
+        setIsFlipped(true)
+    }
+    const onHoverHandlerDisable = () => {
+        setIsFlipped(false)
+    }
+    return (
+        <div className={s.cards_wrapper}>
+            {isChecked ? (
+                <>
+                    <div className={s.card_container}>
+                        <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+                            <div className={`${classes.card} ${s.card}`} onMouseEnter={onHoverHandlerEnable}>
+                                <h2 className={s.title}>{card.question}</h2>
+                            </div>
+                            <div className={classes.card} onMouseDown={onHoverHandlerDisable}>
+                                <h2 className={s.title}>{card.answer}</h2>
+                            </div>
+                        </ReactCardFlip>
+                    </div>
+                    <div>
+                        <Button onClick={() => setIsChecked(false)} className={classes.buttonControl}>check</Button>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div>
+                        <div className={classes.card}>
+                            {card.answer}
+                        </div>
+                        {grades.map((g, i) => (
+                            <Button key={'grade-' + i} onClick={() => {
+                            }} className={classes.buttonGrade}>{g}</Button>
+                        ))}
+                        <div><Button onClick={onNext} className={classes.buttonControl}>next</Button></div>
+                    </div>
+                </>
+            )
+            }
+        </div>
 
-	const onGradeHandler = (i: number) => {
-		dispatch(sendGradeTC(card._id, i + 1));
-	};
-
-	return (<div className={s.cards_wrapper}>
-			{isChecked ? (<>
-					<div className={s.card_container}>
-						<div className={`${classes.card} ${s.card}`} onMouseEnter={onHoverHandlerEnable}
-							 onMouseLeave={onHoverHandlerDisable}>
-							{isHovered ? <h2 className={s.name}>{card.question}</h2> :
-								<div className={s.face}><h2 className={s.back}>{card.answer}</h2></div>}
-							{/*<div className={`${s.face} ${s.left}`}></div>*/}
-							{/*<div className={`${s.face} ${s.right}`}></div>*/}
-							{/*<div className={`${s.face} ${s.front}`}></div>*/}
-						</div>
-					</div>
-					<div>
-						<Button onClick={() => setIsChecked(false)} className={classes.buttonControl}>check</Button>
-					</div>
-				</>) : (<>
-					<div>
-						<div className={classes.card}>
-							{card.answer}
-						</div>
-						{grades.map((g, i) => (<Button key={'grade-' + i} onClick={() => onGradeHandler(i)}
-													   className={classes.buttonGrade}>{g}</Button>))}
-						<div><Button onClick={onNext} className={classes.buttonControl}>next</Button></div>
-					</div>
-				</>)}
-
-		</div>);
+    );
 };
 
 export default Learn;
