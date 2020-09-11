@@ -4,11 +4,24 @@ import Typography from '@material-ui/core/Typography';
 import Slider from '@material-ui/core/Slider';
 import { changeRange } from '../redux/packs-reducer';
 import {useDispatch} from 'react-redux';
+import FormButton from './FormBtn';
+import {Button} from '@material-ui/core';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 const useStyles = makeStyles({
 	root: {
-		width: 150,
+		width: '80%',
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center'
 	},
+	button: {
+		width: '100px',
+		alignContent: 'center',
+	},
+	slider: {
+		marginRight: '30px'
+	}
 });
 
 type PropsType = {
@@ -24,18 +37,17 @@ export default function RangeSlider({minRange,maxRange}:PropsType) {
 
 	const handleChange = (event: any, newValue: number | number[] | any) => {
 		if (newValue) {
-			dispatch(changeRange(newValue[0],newValue[1]))
+			setValue(newValue as number[]);
 		}
-		console.log(newValue)
-		setValue(newValue as number[]);
 	};
+
+	const onApplyChangeHandler = () => {
+		dispatch(changeRange(value[0],value[1]))
+	}
 
 	return (
 		<div className={classes.root}>
-			<Typography id="range-slider" gutterBottom>
-				Number of cards
-			</Typography>
-			<Slider
+			<Slider className={classes.slider}
 				value={value}
 				min={minRange}
 				step={5}
@@ -44,6 +56,14 @@ export default function RangeSlider({minRange,maxRange}:PropsType) {
 				aria-labelledby="range-slider"
 				valueLabelDisplay="on"
 			/>
+			<Button
+				onClick={onApplyChangeHandler}
+				variant="contained"
+				color="primary"
+				className={classes.button}
+			>
+				APPLY
+			</Button>
 		</div>
 	);
 }
