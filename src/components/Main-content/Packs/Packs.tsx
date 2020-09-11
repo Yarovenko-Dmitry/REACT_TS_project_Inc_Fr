@@ -27,10 +27,7 @@ import TableCell from '@material-ui/core/TableCell';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
-
 const theme = createMuiTheme();
-theme.spacing(2);
-
 const useStyles = makeStyles({
   padding: {
     padding: 0
@@ -74,8 +71,10 @@ const Packs = React.memo(function () {
 
   const state = useSelector<AppRootStateType, any>(state => state.packsReducer);
   const {cardPacks, page, pageCount, cardPacksTotalCount} = state;
-  const isAuth = useSelector<AppRootStateType, boolean | any>(state => state.login.isAuth);
+  const {isAuth, userProfile} = useSelector<AppRootStateType, any>(state => state.login);
   const dispatch = useDispatch();
+
+  const userEmail = userProfile.email
 
   useEffect(() => {
     dispatch(getPackOfCardsTC(localPage, localRow));
@@ -138,7 +137,7 @@ const Packs = React.memo(function () {
     return color;
   }, []);
 
-  if (isAuth) {
+  // if (isAuth) {
     return (
       <div>
         <TableContainer component={Paper}>
@@ -182,15 +181,17 @@ const Packs = React.memo(function () {
                   </IconButton>
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton style={{color: randomColor()}}
-                              className={classes.padding} aria-label="delete"
+                  <IconButton style={{color: userEmail !== row.user_name ? '#303030' : randomColor() }}
+							  disabled={userEmail !== row.user_name}
+							  className={classes.padding} aria-label="delete"
                               onClick={() => onDeleteHandler(row._id)}>
                     <DeleteIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
                 <TableCell align="left">
                   {/*Modify Button*/}
-                  <IconButton style={{color: randomColor()}}
+                  <IconButton style={{color: userEmail !== row.user_name ? '#303030' : randomColor() }}
+							  disabled={userEmail !== row.user_name}
                               onClick={() => handleModifyPackModalPopupOpen(row._id)}
                               className={classes.padding} aria-label="modify">
                     <AutorenewIcon fontSize="small"/>
@@ -231,8 +232,8 @@ const Packs = React.memo(function () {
         </ModalWindow>
       </div>
     )
-  }
-  return <Redirect to={'/login'}/>
+  // }
+  // return <Redirect to={'/login'}/>
 
 });
 export default Packs;
