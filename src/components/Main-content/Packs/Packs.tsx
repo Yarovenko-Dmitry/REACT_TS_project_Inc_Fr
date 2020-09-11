@@ -27,10 +27,7 @@ import TableCell from '@material-ui/core/TableCell';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
-
 const theme = createMuiTheme();
-theme.spacing(2);
-
 const useStyles = makeStyles({
   padding: {
     padding: 0
@@ -74,8 +71,10 @@ const Packs = React.memo(function () {
 
   const state = useSelector<AppRootStateType, any>(state => state.packsReducer);
   const {cardPacks, page, pageCount, cardPacksTotalCount} = state;
-  const isAuth = useSelector<AppRootStateType, boolean | any>(state => state.login.isAuth);
+  const {isAuth, userProfile} = useSelector<AppRootStateType, any>(state => state.login);
   const dispatch = useDispatch();
+
+  const userEmail = userProfile.email
 
   useEffect(() => {
     dispatch(getPackOfCardsTC(localPage, localRow));
@@ -98,7 +97,6 @@ const Packs = React.memo(function () {
   const onOpenHandler = (id: string) => {
     history.push("/сards");
     dispatch(getCardsTC(id))
-    console.log(id)
   };
   //  Modify Button
   const onUpdateHandler = (id: string) => {
@@ -116,11 +114,11 @@ const Packs = React.memo(function () {
     setIsOpenModifyPackModalPopup(false);
   };
 
-  const handleAddPackModalPopupOpen = () => {
+  const handleModifyPopupOpen = () => {
     setIsOpenAddPackModalPopup(true);
   };
 
-  const handleAddPackModalPopupClose = () => {
+  const handleModifyPopupClose = () => {
     setIsOpenAddPackModalPopup(false);
   };
 
@@ -139,7 +137,7 @@ const Packs = React.memo(function () {
     return color;
   }, []);
 
-  if (isAuth) {
+  // if (isAuth) {
     return (
       <div>
         <TableContainer component={Paper}>
@@ -150,7 +148,7 @@ const Packs = React.memo(function () {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item xs={6}>
+            <Grid item xs={5}>
               <Typography className={classes.margin} variant="h3">Packs</Typography>
             </Grid>
             <Grid item xs={3}>
@@ -158,7 +156,7 @@ const Packs = React.memo(function () {
             </Grid>
             <Grid item xs={3}>
               <Button
-                onClick={() => handleAddPackModalPopupOpen()}
+                onClick={() => handleModifyPopupOpen()}
                 variant="contained"
                 color="primary"
                 className={classes.button}
@@ -183,15 +181,17 @@ const Packs = React.memo(function () {
                   </IconButton>
                 </TableCell>
                 <TableCell align="center">
-                  <IconButton style={{color: randomColor()}}
-                              className={classes.padding} aria-label="delete"
+                  <IconButton style={{color: userEmail !== row.user_name ? '#303030' : randomColor() }}
+							  disabled={userEmail !== row.user_name}
+							  className={classes.padding} aria-label="delete"
                               onClick={() => onDeleteHandler(row._id)}>
                     <DeleteIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
                 <TableCell align="left">
                   {/*Modify Button*/}
-                  <IconButton style={{color: randomColor()}}
+                  <IconButton style={{color: userEmail !== row.user_name ? '#303030' : randomColor() }}
+							  disabled={userEmail !== row.user_name}
                               onClick={() => handleModifyPackModalPopupOpen(row._id)}
                               className={classes.padding} aria-label="modify">
                     <AutorenewIcon fontSize="small"/>
@@ -205,7 +205,7 @@ const Packs = React.memo(function () {
         <Pagination count={cardPacksTotalCount} page={page - 1}
                     rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
                     rowsPerPage={pageCount} onChangeRowsPerPage={onChangeRowLength}/>
-        <ModalWindow handleClose={handleAddPackModalPopupClose} isOpen={isOpenAddPackModalPopup} title={'Add' +
+        <ModalWindow handleClose={handleModifyPopupClose} isOpen={isOpenAddPackModalPopup} title={'Add' +
         ' new pack'}>
 
           <form onSubmit={onAddNewPackHandler}>
@@ -232,8 +232,8 @@ const Packs = React.memo(function () {
         </ModalWindow>
       </div>
     )
-  }
-  return <Redirect to={'/login'}/>
+  // }
+  // return <Redirect to={'/login'}/>
 
 });
 export default Packs;
