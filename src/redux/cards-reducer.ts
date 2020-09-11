@@ -1,7 +1,6 @@
 import {Dispatch} from 'redux';
 import {mainContent} from '../api/api';
 import {AppRootStateType} from './redux-store';
-import {getPackOfCardsTC} from './packs-reducer';
 
 export type StateType = {
   cards: CardType[],
@@ -81,17 +80,27 @@ export const getNewPageTC = (page: number, row: number) => (dispatch: Dispatch<a
   });
 };
 
-export const addNewCardTC = (question: string, answer: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
-  const {id} = getState().cardsReducer;
-  mainContent.addNewCard(id, question, answer).then(
-    res => {
-      debugger
-      dispatch(getCardsTC(id));
-    }
-  ).catch(error => {
-    debugger
-    console.log(error.response.data.error)
-  });
+export const addNewCardTC = (question:string,answer:string) => (dispatch: Dispatch<any>,getState: () => AppRootStateType) => {
+	const {id} = getState().cardsReducer;
+	mainContent.addNewCard(id, question, answer).then(
+		res => {
+			dispatch(getCardsTC(id));
+
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
+
+export const sendGradeTC = (cardId:string,grade:number) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+	const {id} = getState().cardsReducer;
+	mainContent.sendCardGrade(cardId, grade).then(
+		res => {
+			dispatch(getCardsTC(id));
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
 };
 
 export const deleteCardTC = (cardId: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {

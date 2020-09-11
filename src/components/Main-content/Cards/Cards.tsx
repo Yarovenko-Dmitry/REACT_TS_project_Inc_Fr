@@ -8,42 +8,40 @@ import FormButton from '../../../common/FormBtn';
 import TableContainer from '@material-ui/core/TableContainer';
 import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import TableData from '../../../common/Table';
-import {addNewCardTC, CardType, deleteCardTC, getNewPageTC, updateCardTC} from '../../../redux/cards-reducer';
+import {CardType, deleteCardTC, getNewPageTC, addNewCardTC, updateCardTC} from '../../../redux/cards-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Pagination from '../../../common/Pagination';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
+import SchoolIcon from '@material-ui/icons/School';
 
 const theme = createMuiTheme();
 theme.spacing(2);
 
 const useStyles = makeStyles({
-  padding: {
-    padding: 0
-  },
-  button: {
-    width: '250px',
-    alignContent: 'center',
-  },
-  margin: {
-    marginLeft: theme.spacing(5),
-  },
-  distance: {
-    width: '150px'
-  },
+	padding: {
+		padding: 0
+	}, button: {
+		width: '250px', alignContent: 'center',
+	}, margin: {
+		marginLeft: theme.spacing(5),
+	}, distance: {
+		width: '150px'
+	},
 });
 
 const Cards = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
+	const classes = useStyles();
+	const dispatch = useDispatch();
 
-  const state = useSelector<AppRootStateType, any>(state => state.cardsReducer);
-  const isAuth = useSelector<AppRootStateType, boolean | any>(state => state.login.isAuth);
-  const {cards, cardsTotalCount, page, pageCount, id} = state;
+	const state = useSelector<AppRootStateType, any>(state => state.cardsReducer);
+	const {isAuth, userProfile} = useSelector<AppRootStateType, any>(state => state.login);
+	const {cards, cardsTotalCount, page, pageCount, id} = state;
+	const cardPacks = useSelector<AppRootStateType, any>(state => state.packsReducer.cardPacks);
 
   const [localPage, setlocalPage] = useState(1);
   const [localRow, setlocalRow] = useState(4);
@@ -54,6 +52,16 @@ const Cards = () => {
   const [isOpenAddCardModalPopup, setIsOpenAddCardModalPopup] = useState(false);
   const [isOpenModifyCardModalPopup, setIsOpenModifyCardModalPopup] = useState(false);
   const [updateCardId, setUpdateCardId] = useState('');
+  const [showBtn, setShowBtn] = useState(true);
+
+  // if (cardPacks.length) {
+  // 	const userEmail = userProfile.email;
+  // 	let findPack = cardPacks.find((elem: any) => elem._id === id);
+  // 	if (findPack) {
+  // 		findPack.user_name === userEmail ? setShowBtn(true) : setShowBtn(false);
+  // 	}
+  // }
+
 
   const handleDialogOpen = () => {
     setIsOpenAddCardModalPopup(true);
@@ -67,9 +75,10 @@ const Cards = () => {
     dispatch(addNewCardTC(question, answer));
     setIsOpenAddCardModalPopup(false);
   };
+  let history = useHistory();
 
-  const handleLerningModalPopupOpen = () => {
-    console.log('Go to lern')
+  const onLearnHandler = () => {
+    history.push("/learn");
   };
 
   const onDeleteHandler = (id: string) => {
@@ -97,15 +106,14 @@ const Cards = () => {
     setIsOpenModifyCardModalPopup(false);
   };
 
-  const onChangePage = (newPage: number) => {
-    setlocalPage(newPage + 1);
-    dispatch(getNewPageTC(newPage + 1, localRow))
-  };
-
-  const onChangeRowLength = (row: number) => {
-    setlocalRow(row);
-    dispatch(getNewPageTC(localPage, row));
-  };
+	const onChangePage = (newPage: number) => {
+		setlocalPage(newPage + 1);
+		dispatch(getNewPageTC(newPage + 1, localRow));
+	};
+	const onChangeRowLength = (row: number) => {
+		setlocalRow(row);
+		dispatch(getNewPageTC(localPage, row));
+	};
 
   const tableCell = [
     {name: 'Question', align: 'inherit'},
@@ -133,10 +141,10 @@ const Cards = () => {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item xs={6}>
+            <Grid item xs={7}>
               <Typography className={classes.margin} variant="h3">Cards</Typography>
             </Grid>
-            <Grid item xs={3}>
+            {showBtn ? <Grid item xs={2}>
               <Button
                 onClick={() => handleDialogOpen()}
                 variant="contained"
@@ -146,14 +154,17 @@ const Cards = () => {
               >
                 ADD CARD
               </Button>
+            </Grid> : null}
+
+            <Grid item xs={2}>
               <Button
-                onClick={() => handleLerningModalPopupOpen()}
+                onClick={onLearnHandler}
                 variant="contained"
                 color="primary"
                 className={classes.button}
-                startIcon={<AddBoxIcon/>}
+                startIcon={<SchoolIcon/>}
               >
-                Go to learn
+                To learn
               </Button>
             </Grid>
           </Grid>
@@ -168,7 +179,7 @@ const Cards = () => {
                 <TableCell align="center">
                   <IconButton style={{color: randomColor()}}
                               className={classes.padding} aria-label="delete"
-                              onClick={() => onDeleteHandler(row._id)}>
+                    onClick={() => onDeleteHandler(row._id)}>
                     <DeleteIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
@@ -183,6 +194,7 @@ const Cards = () => {
               </TableRow>
             ))}
           </TableData>
+
         </TableContainer>
         <Pagination count={cardsTotalCount} page={page - 1}
                     rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
@@ -219,8 +231,7 @@ const Cards = () => {
             </Grid>
           </form>
         </ModalWindow>
-      </div>
-    )
+      </div>);
   }
   return <Redirect to={'/login'}/>;
 };
