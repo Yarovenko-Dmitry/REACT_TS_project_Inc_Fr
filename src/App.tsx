@@ -10,34 +10,39 @@ import {Profile} from "./components/Profile/Profile";
 import Packs from './components/Main-content/Packs/Packs';
 import WrongPage from './components/WrongPage';
 import Cards from './components/Main-content/Cards/Cards';
+import Learn from "./components/Main-content/Learn/Learn";
 
 function App() {
 
-	return (
-			<div className="App">
-			<header>
-				<Navbar/>
-			</header>
-				<Switch>
-					<Route path={'/profile/:userId?'}
-                   render={() => <Profile/>}/>
-					<Route path={'/login'}
-					       render={() => <LoginPage/>}/>
-					<Route path={'/register'}
-					       render={() => <RegisterContainer/>}/>
-					<Route path={'/passwordRecovery'}
-					       render={() => <PasswordRecovery/>}/>
-					<Route path={'/set-new-password/:token?'}
-					       render={() => <PasswordCreation/>}/>
-					<Route path={'/packs'}
-					       render={() => <Packs/>}/>
-				    <Route path={'/сards'}
-					       render={() => <Cards/>}/>
-					<Route path={'*'}
-					       render={() => <WrongPage/>}/>
-				</Switch>
-		</div>
-	);
+    return (
+        <div className="App">
+            <header>
+                <Navbar/>
+            </header>
+            <Switch>
+                <Route path={'/profile/:userId?'}
+                       render={() => <Profile/>}/>
+                <Route path={'/login'}
+                       render={() => <LoginPage/>}/>
+                <Route path={'/register'}
+                       render={() => <RegisterContainer/>}/>
+                <Route path={'/passwordRecovery'}
+                       render={() => <PasswordRecovery/>}/>
+                <Route path={'/set-new-password/:token?'}
+                       render={() => <PasswordCreation/>}/>
+                <Route path={'/packs'}
+                       render={() => <Packs/>}/>
+                <Route path={'/сards'}
+                       render={() => <Cards/>}/>
+                <Route path={'/learn'}
+                       render={() => <Learn/>}/>
+                <Route path={'*'}
+                       render={() => <WrongPage/>}/>
+
+
+            </Switch>
+        </div>
+    );
 }
 
 export default App;
