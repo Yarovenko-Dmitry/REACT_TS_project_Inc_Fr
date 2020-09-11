@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Paper from '@material-ui/core/Paper';
 import {Button, Grid, IconButton, Typography} from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -8,7 +8,7 @@ import FormButton from '../../../common/FormBtn';
 import TableContainer from '@material-ui/core/TableContainer';
 import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import TableData from '../../../common/Table';
-import {CardType, getNewPageTC, addNewCardTC, getCardsTC} from '../../../redux/cards-reducer';
+import {CardType, getNewPageTC, addNewCardTC} from '../../../redux/cards-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
 import TableRow from '@material-ui/core/TableRow';

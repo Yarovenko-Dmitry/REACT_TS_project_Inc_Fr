@@ -1,6 +1,7 @@
 import {Dispatch} from 'redux';
 import {mainContent} from '../api/api';
 import {AppRootStateType} from './redux-store';
+import {getPackOfCardsTC} from './packs-reducer';
 
 export type StateType = {
 	cards: CardType[],
@@ -97,6 +98,17 @@ export const sendGradeTC = (cardId:string,grade:number) => (dispatch: Dispatch<a
 	mainContent.sendCardGrade(cardId, grade).then(
 		res => {
 			dispatch(getCardsTC(id));
+		}
+	).catch(error => {
+		console.log(error.response.data.error)
+	});
+};
+
+export const deleteCardTC = (id: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+	const {page, pageCount} = getState().packsReducer
+	mainContent.deleteCard(id).then(
+		res => {
+			dispatch(getPackOfCardsTC(page, pageCount));
 		}
 	).catch(error => {
 		console.log(error.response.data.error)

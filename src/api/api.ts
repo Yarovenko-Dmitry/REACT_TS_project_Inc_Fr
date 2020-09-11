@@ -48,6 +48,9 @@ export const mainContent = {
 			}
 		});
 	},
+	deleteCard(id: string) {
+		return instance.delete(`/cards/card?id=${id}`);
+	},
 };
 
 export const passwordRecovery = {
