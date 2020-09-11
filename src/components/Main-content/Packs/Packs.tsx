@@ -94,8 +94,8 @@ const Packs = React.memo(function () {
     dispatch(deletePackTC(id));
   };
 
-  const onLerningHandler = (id: string) => {
-    console.log('Go to lern ' + id);
+  const onLearningHandler = (id: string) => {
+    console.log('Go to learn ' + id);
   };
 
   const onOpenHandler = (id: string) => {
@@ -129,7 +129,7 @@ const Packs = React.memo(function () {
   const tableCell = [
     {name: 'Name', align: 'inherit'},
     {name: 'Card Count', align: 'center'},
-    {name: 'Lerning', align: 'right'},
+    {name: 'Learning', align: 'right'},
     {name: 'Open', align: 'right'},
     {name: 'Delete', align: 'center'},
     {name: 'Modify', align: 'left'},
@@ -180,7 +180,7 @@ const Packs = React.memo(function () {
               <TableCell align="center">{row.cardsCount}</TableCell>
               <TableCell align="right">
                 <IconButton style={{color: randomColor()}}
-                            onClick={() => onLerningHandler(row._id)}
+                            onClick={() => onLearningHandler(row._id)}
                             className={classes.padding} aria-label="add">
                   <AddBoxIcon fontSize="small"/>
                 </IconButton>

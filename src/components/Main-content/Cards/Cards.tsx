@@ -8,14 +8,14 @@ import FormButton from '../../../common/FormBtn';
 import TableContainer from '@material-ui/core/TableContainer';
 import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import TableData from '../../../common/Table';
-import {CardType, getNewPageTC, addNewCardTC} from '../../../redux/cards-reducer';
+import {CardType, getNewPageTC, addNewCardTC, deleteCardTC} from '../../../redux/cards-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Pagination from '../../../common/Pagination';
 import {Redirect} from 'react-router-dom';
-import {PackType} from '../../../redux/packs-reducer';
+import {deletePackTC, PackType} from '../../../redux/packs-reducer';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
@@ -68,6 +68,10 @@ const Cards = () => {
 
   const handleLerningModalPopupOpen = () => {
     console.log('Go to lern')
+  };
+
+  const onDeleteHandler = (id: string) => {
+    dispatch(deleteCardTC(id));
   };
 
   const onChangePage = (newPage: number) => {
@@ -125,7 +129,7 @@ const Cards = () => {
                 className={classes.button}
                 startIcon={<AddBoxIcon/>}
               >
-                Go to lern
+                Go to learn
               </Button>
             </Grid>
           </Grid>
@@ -140,8 +144,8 @@ const Cards = () => {
                 <TableCell align="center">
                   <IconButton style={{color: randomColor()}}
                               className={classes.padding} aria-label="delete"
-                    // onClick={() => onDeleteHandler(row._id)}>
-                              onClick={() => console.log(row._id)}>
+                    onClick={() => onDeleteHandler(row._id)}>
+                              {/*onClick={() => console.log(row._id)}>*/}
                     <DeleteIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
