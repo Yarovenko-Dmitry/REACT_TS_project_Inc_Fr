@@ -115,7 +115,7 @@ export function LoginPage() {
                                  name="rememberMe"
                                  onChange={formik.handleChange}
                                  value={formik.values.rememberMe} color="primary"/>}
-              label="Remember me    772316772316"
+              label="Remember me"
             />
             <FormButton name={'Log in'}/>
             <Grid container>
