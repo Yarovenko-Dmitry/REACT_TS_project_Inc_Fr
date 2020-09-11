@@ -22,8 +22,9 @@ export type CardType = {
 	type: string
 	created: string
 	updated: string
-	__v: number
-	_id: string
+	__v?: number
+	_id: string,
+	more_id?: string
 }
 
 let initialState: StateType = {

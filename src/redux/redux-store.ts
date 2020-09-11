@@ -7,6 +7,7 @@ import loginReducer from './login-reducer';
 import {packsReducer} from "./packs-reducer";
 import {cardsReducer} from "./cards-reducer";
 import {appReducer} from "./app-reducer";
+import learnReducer from "./learnReducer";
 
 
 const reducers = combineReducers({
@@ -16,7 +17,8 @@ const reducers = combineReducers({
   login: loginReducer,
   packsReducer,
   cardsReducer,
-  app: appReducer
+  app: appReducer,
+  learn: learnReducer
 
 });
 
