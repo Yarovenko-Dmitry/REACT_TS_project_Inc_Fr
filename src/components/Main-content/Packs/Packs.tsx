@@ -98,7 +98,6 @@ const Packs = React.memo(function () {
   const onOpenHandler = (id: string) => {
     history.push("/сards");
     dispatch(getCardsTC(id))
-    console.log(id)
   };
   //  Modify Button
   const onUpdateHandler = (id: string) => {
@@ -116,11 +115,11 @@ const Packs = React.memo(function () {
     setIsOpenModifyPackModalPopup(false);
   };
 
-  const handleAddPackModalPopupOpen = () => {
+  const handleModifyPopupOpen = () => {
     setIsOpenAddPackModalPopup(true);
   };
 
-  const handleAddPackModalPopupClose = () => {
+  const handleModifyPopupClose = () => {
     setIsOpenAddPackModalPopup(false);
   };
 
@@ -150,7 +149,7 @@ const Packs = React.memo(function () {
             justify="space-between"
             alignItems="center"
           >
-            <Grid item xs={6}>
+            <Grid item xs={5}>
               <Typography className={classes.margin} variant="h3">Packs</Typography>
             </Grid>
             <Grid item xs={3}>
@@ -158,7 +157,7 @@ const Packs = React.memo(function () {
             </Grid>
             <Grid item xs={3}>
               <Button
-                onClick={() => handleAddPackModalPopupOpen()}
+                onClick={() => handleModifyPopupOpen()}
                 variant="contained"
                 color="primary"
                 className={classes.button}
@@ -205,7 +204,7 @@ const Packs = React.memo(function () {
         <Pagination count={cardPacksTotalCount} page={page - 1}
                     rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
                     rowsPerPage={pageCount} onChangeRowsPerPage={onChangeRowLength}/>
-        <ModalWindow handleClose={handleAddPackModalPopupClose} isOpen={isOpenAddPackModalPopup} title={'Add' +
+        <ModalWindow handleClose={handleModifyPopupClose} isOpen={isOpenAddPackModalPopup} title={'Add' +
         ' new pack'}>
 
           <form onSubmit={onAddNewPackHandler}>
