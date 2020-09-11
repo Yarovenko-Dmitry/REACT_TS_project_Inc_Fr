@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import Paper from '@material-ui/core/Paper';
 import {Button, Grid, IconButton, Typography} from '@material-ui/core';
 import AddBoxIcon from '@material-ui/icons/AddBox';
@@ -8,14 +8,13 @@ import FormButton from '../../../common/FormBtn';
 import TableContainer from '@material-ui/core/TableContainer';
 import {createMuiTheme, makeStyles} from '@material-ui/core/styles';
 import TableData from '../../../common/Table';
-import {CardType, getNewPageTC, addNewCardTC, deleteCardTC} from '../../../redux/cards-reducer';
+import {addNewCardTC, CardType, deleteCardTC, getNewPageTC, updateCardTC} from '../../../redux/cards-reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {AppRootStateType} from '../../../redux/redux-store';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Pagination from '../../../common/Pagination';
 import {Redirect} from 'react-router-dom';
-import {deletePackTC, PackType} from '../../../redux/packs-reducer';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AutorenewIcon from '@material-ui/icons/Autorenew';
 
@@ -50,20 +49,23 @@ const Cards = () => {
   const [localRow, setlocalRow] = useState(4);
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-
+  const [currentQuestion, setCurrentQuestion] = useState('');
+  const [currentAnswer, setCurrentAnswer] = useState('');
+  const [isOpenAddCardModalPopup, setIsOpenAddCardModalPopup] = useState(false);
+  const [isOpenModifyCardModalPopup, setIsOpenModifyCardModalPopup] = useState(false);
+  const [updateCardId, setUpdateCardId] = useState('');
 
   const handleDialogOpen = () => {
-    setIsOpen(true);
+    setIsOpenAddCardModalPopup(true);
   };
 
   const handleDialogClose = () => {
-    setIsOpen(false);
+    setIsOpenAddCardModalPopup(false);
   };
 
   const onAddNewPackHandler = () => {
     dispatch(addNewCardTC(question, answer));
-    setIsOpen(false);
+    setIsOpenAddCardModalPopup(false);
   };
 
   const handleLerningModalPopupOpen = () => {
@@ -74,10 +76,32 @@ const Cards = () => {
     dispatch(deleteCardTC(id));
   };
 
+  const onUpdateHandler = (id: string) => {
+    const card: CardType = cards.find((el: CardType) => el._id === id);
+    setCurrentQuestion(card.question);
+    setCurrentAnswer(card.answer);
+  };
+
+  const onModifyCardHandler = () => {
+    dispatch(updateCardTC(updateCardId, currentQuestion, currentAnswer));
+    setIsOpenModifyCardModalPopup(false);
+  };
+
+  const handleModifyCardModalPopupOpen = (id: string) => {
+    setUpdateCardId(id);
+    setIsOpenModifyCardModalPopup(true);
+    onUpdateHandler(id);
+  };
+
+  const handleModifyCardModalPopupClose = () => {
+    setIsOpenModifyCardModalPopup(false);
+  };
+
   const onChangePage = (newPage: number) => {
     setlocalPage(newPage + 1);
     dispatch(getNewPageTC(newPage + 1, localRow))
   };
+
   const onChangeRowLength = (row: number) => {
     setlocalRow(row);
     dispatch(getNewPageTC(localPage, row));
@@ -144,16 +168,14 @@ const Cards = () => {
                 <TableCell align="center">
                   <IconButton style={{color: randomColor()}}
                               className={classes.padding} aria-label="delete"
-                    onClick={() => onDeleteHandler(row._id)}>
-                              {/*onClick={() => console.log(row._id)}>*/}
+                              onClick={() => onDeleteHandler(row._id)}>
                     <DeleteIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
                 <TableCell align="left">
                   <IconButton style={{color: randomColor()}}
                               className={classes.padding} aria-label="modify"
-                              // onClick={() => handleModifyPackModalPopupOpen(row._id)}>
-                    onClick={() => console.log(row._id)}>
+                              onClick={() => handleModifyCardModalPopupOpen(row._id)}>
                     <AutorenewIcon fontSize="small"/>
                   </IconButton>
                 </TableCell>
@@ -161,12 +183,11 @@ const Cards = () => {
               </TableRow>
             ))}
           </TableData>
-
         </TableContainer>
         <Pagination count={cardsTotalCount} page={page - 1}
                     rowsPerPageOptions={[4, 10, 20]} onChangePage={onChangePage}
                     rowsPerPage={pageCount} onChangeRowsPerPage={onChangeRowLength}/>
-        <ModalWindow handleClose={() => handleDialogClose()} isOpen={isOpen} title={'Add' +
+        <ModalWindow handleClose={() => handleDialogClose()} isOpen={isOpenAddCardModalPopup} title={'Add' +
         ' new card'}>
           <form onSubmit={() => onAddNewPackHandler()}>
             <Grid container spacing={2}>
@@ -180,14 +201,28 @@ const Cards = () => {
             </Grid>
           </form>
         </ModalWindow>
+        <ModalWindow handleClose={handleModifyCardModalPopupClose} isOpen={isOpenModifyCardModalPopup} title={'Modify' +
+        ' card QA'}>
+          <form onSubmit={onModifyCardHandler}>
+            <Grid container spacing={2}>
+              <InputField
+                value={currentQuestion}
+                type={'text'} label={'Set new question'}
+                onChange={setCurrentQuestion}
+              />
+              <InputField
+                value={currentAnswer}
+                type={'text'} label={'Set new answer'}
+                onChange={setCurrentAnswer}
+              />
+              <FormButton name={'Send updated card QA'}/>
+            </Grid>
+          </form>
+        </ModalWindow>
       </div>
-
     )
   }
-  return <Redirect to={'/login'}/>
-
-
-    ;
+  return <Redirect to={'/login'}/>;
 };
 
 export default Cards;
