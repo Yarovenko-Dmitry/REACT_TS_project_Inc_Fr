@@ -95,7 +95,7 @@ const Packs = React.memo(function () {
   };
 
   const onLerningHandler = (id: string) => {
-    console.log(id);
+    console.log('Go to lern ' + id);
   };
 
   const onOpenHandler = (id: string) => {
