@@ -88,13 +88,11 @@ const Packs = React.memo(function () {
 	};
 
 	const onLearningHandler = (id: string) => {
-		history.push('/learn');
-		dispatch(getCardsTC(id));
+		history.push('/learn/' + id);
 	};
 
 	const onOpenHandler = (id: string) => {
-		history.push('/сards');
-		dispatch(getCardsTC(id));
+		history.push('/сards/' + id);
 	};
 
 	const onUpdateHandler = (id: string) => {

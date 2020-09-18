@@ -32,9 +32,9 @@ function App() {
                        render={() => <PasswordCreation/>}/>
                 <Route path={'/packs'}
                        render={() => <Packs/>}/>
-                <Route path={'/сards'}
+                <Route path={'/сards/:id'}
                        render={() => <Cards/>}/>
-                <Route path={'/learn'}
+                <Route path={'/learn/:id'}
                        render={() => <Learn/>}/>
                 <Route path={'*'}
                        render={() => <WrongPage/>}/>
