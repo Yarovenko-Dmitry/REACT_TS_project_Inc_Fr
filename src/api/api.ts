@@ -36,6 +36,9 @@ export const mainContent = {
 	getCards(id: string, page: number, row: number) {
 		return instance.get(`/cards/card?cardsPack_id=${id}&page=${page}&pageCount=${row}`);
 	},
+	sendCardGrade(cardId: string, grade: number) {
+		return instance.put(`/cards/grade`,{grade: grade, card_id: cardId});
+	},
 	addNewCard(id: string, question: string, answer: string) {
 		return instance.post(`/cards/card`, {
 			card: {
@@ -47,6 +50,17 @@ export const mainContent = {
 	},
 	deleteCard(id: string) {
 		return instance.delete(`/cards/card?id=${id}`);
+	},
+	updateCard(id: string, question: string, answer: string) {
+		return instance.put(
+			`/cards/card`,
+			{
+				card: {
+					_id: id,
+					question,
+					answer
+				}
+			});
 	},
 };
 
