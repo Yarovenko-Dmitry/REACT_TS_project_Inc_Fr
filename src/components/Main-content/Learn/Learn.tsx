@@ -7,6 +7,8 @@ import {Button, createMuiTheme} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import {AppRootStateType} from "../../../redux/redux-store";
 import ReactCardFlip from "react-card-flip";
+// @ts-ignore
+import Zoom from 'react-reveal/Zoom';
 
 const theme = createMuiTheme();
 theme.spacing(2);
@@ -64,11 +66,12 @@ const getCard = (cards: CardType[]) => {
 
 
 const Learn = (props: PropsType) => {
+
     const classes = useStyles();
     const dispatch = useDispatch();
 
     const [isChecked, setIsChecked] = useState<boolean>(true);
-    const [isHovered, setIsHovered] = useState<boolean>(true);
+    const [isDisabled, setIsDisabled] = useState<boolean>(false);
     const [isFlipped, setIsFlipped] = useState<boolean>(false);
     const [first, setFirst] = useState<boolean>(true);
     // const [first, setFirst] = useState<boolean>(0);
@@ -104,37 +107,42 @@ const Learn = (props: PropsType) => {
 
 	const onNext = () => {
 		setIsChecked(true);
+		setIsDisabled(false)
 		if (cards.length > 0) {
 			setCard(getCard(cards));
 		} else {
 
         }
     }
-    const onHoverHandlerEnable = () => {
+    const onClickHandlerEnable = () => {
         setIsFlipped(true)
     }
-    const onHoverHandlerDisable = () => {
+    const onClickHandlerDisable = () => {
         setIsFlipped(false)
     }
 
 	const onGradeHandler = (i: number) => {
 		dispatch(sendGradeTC(card._id, i + 1));
+		setIsDisabled(true)
 	};
+
 
     return (
         <div className={s.cards_wrapper}>
             {isChecked ? (
                 <>
+                <Zoom left>
                     <div className={s.card_container}>
                         <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
-                            <div className={`${classes.card} ${s.card}`} onMouseEnter={onHoverHandlerEnable}>
+                            <div className={`${classes.card} ${s.card}`} onClick={onClickHandlerEnable}>
                                 <h2 className={s.title}>{card.question}</h2>
                             </div>
-                            <div className={classes.card} onMouseDown={onHoverHandlerDisable}>
+                            <div className={classes.card} onClick={onClickHandlerDisable}>
                                 <h2 className={s.title}>{card.answer}</h2>
                             </div>
                         </ReactCardFlip>
                     </div>
+                    </Zoom>
                     <div>
                         <Button onClick={() => setIsChecked(false)} className={classes.buttonControl}>check</Button>
                     </div>
@@ -142,12 +150,12 @@ const Learn = (props: PropsType) => {
             ) : (
                 <>
                     <div>
-                        <div className={classes.card}>
-                            {card.answer}
+                        <div className={`${classes.card} ${s.card}`}>
+							<h2 className={s.title}>{card.answer}</h2>
                         </div>
                         {grades.map((g, i) => (
 													<Button key={'grade-' + i} onClick={() => onGradeHandler(i)}
-																	className={classes.buttonGrade}>{g}</Button>
+																	className={classes.buttonGrade} disabled={isDisabled}>{g}</Button>
                         ))}
                         <div><Button onClick={onNext} className={classes.buttonControl}>next</Button></div>
                     </div>
