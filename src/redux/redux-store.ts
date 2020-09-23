@@ -7,16 +7,7 @@ import {loginReducer} from './login-reducer';
 import {packsReducer} from "./packs-reducer";
 import {cardsReducer} from "./cards-reducer";
 import {appReducer} from "./app-reducer";
-debugger
 
-console.log(' registerReducer', registerReducer );
-console.log(' passwordRecoveryReducer', passwordRecoveryReducer );
-console.log(' pssawordCreationReducer', pssawordCreationReducer );
-console.log(' loginReducer', loginReducer );
-console.log(' packsReducer', packsReducer );
-console.log(' cardsReducer', cardsReducer );
-console.log(' appReducer', appReducer );
-debugger
 const reducers = combineReducers({
   login: loginReducer,
   register: registerReducer,
