@@ -37,7 +37,7 @@ const TableData = ({heading,children}: PropsType) => {
 		<Table className={classes.table} aria-label="simple table">
 			<TableHead>
 				<TableRow>
-					{heading.map(elem => <TableCell className={classes.heading}
+					{heading.map((elem,index) => <TableCell key={index} className={classes.heading}
 					                                align={elem.align}>{elem.name}</TableCell>
 					)}
 				</TableRow>
