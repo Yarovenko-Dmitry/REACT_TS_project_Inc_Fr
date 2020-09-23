@@ -59,6 +59,18 @@ export function LoginPage() {
       password: '',
       rememberMe: false
     },
+    validate: (values) => {
+      if (!values.email) {
+        return {
+          email: 'Email is required'
+        };
+      }
+      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        return {
+          email: 'Invalid email address'
+        };
+      }
+    },
     onSubmit: values => {
       const {email, password, rememberMe} = values
       dispatch(setLoginTC(email, password, rememberMe))
