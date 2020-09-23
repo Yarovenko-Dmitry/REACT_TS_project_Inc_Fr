@@ -22,8 +22,8 @@ let internalState: LoginReducerType = {
     error: '',
   }
 };
-
-const loginReducer = (state: LoginReducerType = internalState, action: ActionTypes): LoginReducerType => {
+debugger
+ export const loginReducer = (state: LoginReducerType = internalState, action: ActionTypes): LoginReducerType => {
 
   switch (action.type) {
     case 'login/SET_USER_DATA':
@@ -37,6 +37,8 @@ const loginReducer = (state: LoginReducerType = internalState, action: ActionTyp
         ...state,
         isAuth: false
       };
+    default:
+      return state
   }
 }
 
@@ -51,7 +53,7 @@ const logoutAC = () => ({
 
 type ActionTypes =
   | ReturnType<typeof loginAC>
-  | ReturnType<typeof logoutAC>
+  | ReturnType<typeof logoutAC>;
 
 export const setLoginTC = (email: string, password: string, rememberMe: boolean = false) => (dispatch: Dispatch<ActionTypes>) => {
   authAPI.login(email, password, rememberMe)
@@ -70,5 +72,4 @@ export const logoutTC = () => (dispatch: Dispatch) => {
     })
 }
 
-export default loginReducer
 

@@ -53,7 +53,8 @@ const Packs = React.memo(function () {
   const [isOpenModifyPackModalPopup, setIsOpenModifyPackModalPopup] = useState(false);
 
   const isInitialized = useSelector<AppRootStateType, boolean>((state) => state.app.isInitialized);
-
+  const isAuth = useSelector<AppRootStateType, boolean | undefined>(state => state.login.isAuth);
+  const userProfile = useSelector<AppRootStateType, any>(state => state.login.userProfile);
 
   const onChangePage = (newPage: number) => {
     setlocalPage(newPage + 1);
@@ -66,7 +67,7 @@ const Packs = React.memo(function () {
 
   const state = useSelector<AppRootStateType, any>(state => state.packsReducer);
   const {cardPacks, page, pageCount, cardPacksTotalCount} = state;
-  const {isAuth, userProfile} = useSelector<AppRootStateType, any>(state => state.login);
+  // const {isAuth, userProfile} = useSelector<AppRootStateType, any>(state => state.login);
   const dispatch = useDispatch();
 
   const userEmail = userProfile.email;

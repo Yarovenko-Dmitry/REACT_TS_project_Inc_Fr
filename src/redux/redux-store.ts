@@ -3,16 +3,25 @@ import thunkMiddleware from 'redux-thunk';
 import {registerReducer} from "./register-reducer";
 import passwordRecoveryReducer from './passwordRecovery-reducer';
 import pssawordCreationReducer from './pssawordCreation-reducer';
-import loginReducer from './login-reducer';
+import {loginReducer} from './login-reducer';
 import {packsReducer} from "./packs-reducer";
 import {cardsReducer} from "./cards-reducer";
 import {appReducer} from "./app-reducer";
+debugger
 
+console.log(' registerReducer', registerReducer );
+console.log(' passwordRecoveryReducer', passwordRecoveryReducer );
+console.log(' pssawordCreationReducer', pssawordCreationReducer );
+console.log(' loginReducer', loginReducer );
+console.log(' packsReducer', packsReducer );
+console.log(' cardsReducer', cardsReducer );
+console.log(' appReducer', appReducer );
+debugger
 const reducers = combineReducers({
+  login: loginReducer,
   register: registerReducer,
   pwRecoveryRequest: passwordRecoveryReducer,
   passwordUpdate: pssawordCreationReducer,
-  login: loginReducer,
   packsReducer,
   cardsReducer,
   app: appReducer,
