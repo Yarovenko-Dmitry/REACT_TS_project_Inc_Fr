@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: '100%', // Fix IE 11 issue.
+    width: '100%',
     marginTop: theme.spacing(1),
   },
   submit: {
@@ -64,8 +64,7 @@ export function LoginPage() {
         return {
           email: 'Email is required'
         };
-      }
-      else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
         return {
           email: 'Invalid email address'
         };
@@ -74,7 +73,6 @@ export function LoginPage() {
     onSubmit: values => {
       const {email, password, rememberMe} = values
       dispatch(setLoginTC(email, password, rememberMe))
-      // console.log(JSON.stringify(values, null, 2));
     },
   });
 
@@ -85,7 +83,6 @@ export function LoginPage() {
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline/>
-      {/*<Grid item xs={false} sm={4} md={7} className={classes.image} />*/}
       <Grid item xs={12} sm={8} md={5} className={classes.centr} component={Paper} elevation={6} square>
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
@@ -118,7 +115,6 @@ export function LoginPage() {
               label="Password"
               type="password"
               id="password"
-              // autoComplete="current-password"
               onChange={formik.handleChange}
               value={formik.values.password}
             />
@@ -129,17 +125,17 @@ export function LoginPage() {
                                  value={formik.values.rememberMe} color="primary"/>}
               label="Remember me"
             />
+            <div>Login: sotrudnik_test@mail.ru</div>
+            <div>Password: passwordTest</div>
             <FormButton name={'Log in'}/>
             <Grid container>
               <Grid item xs>
                 <NavLink to='/passwordRecovery'>
                   <Link
-
                     variant="body2">
                     Forgot password?
                   </Link>
                 </NavLink>
-
               </Grid>
               <Grid item>
                 <NavLink to='/register'>
@@ -148,7 +144,6 @@ export function LoginPage() {
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </NavLink>
-
               </Grid>
             </Grid>
           </form>
